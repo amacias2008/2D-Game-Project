@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class PlayerController : MonoBehaviour {
 	public float speedForce = 50f;
@@ -13,14 +16,34 @@ public class PlayerController : MonoBehaviour {
 	public LayerMask ground;
 
 	Animator anim;
+
+	public float health;
+
+	void Awake()
+	{
+
+	}
 	// Use this for initialization
 	void Start () 
 	{
 		anim = GetComponent<Animator> ();
+		health = GetComponent<HealthScript> ().health;
 	}
 	
 	// Update is called once per frame
 	void Update () 
+	{
+		Movement ();
+	}
+		
+	/**********************************************************
+	 * This following method is in charge of all movement
+	 * from the player as well animation.
+	 * A = Left
+	 * D = Right
+	 * W = Up
+	 * ******************************************************/
+	void Movement()
 	{
 		if (Input.GetKey (KeyCode.A)) {
 			speed = isGrounded ? speedForce : speedForce*0.8f;
@@ -34,8 +57,8 @@ public class PlayerController : MonoBehaviour {
 			anim.SetInteger ("AnimationState", 1);
 		} else if (isGrounded)
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, GetComponent<Rigidbody2D> ().velocity.y);
-			anim.SetInteger ("AnimationState", 0);
-		
+		anim.SetInteger ("AnimationState", 0);
+
 
 		isGrounded = Physics2D.OverlapCircle (grounder.transform.position, radiuss, ground);
 
@@ -44,9 +67,29 @@ public class PlayerController : MonoBehaviour {
 			GetComponent<Rigidbody2D>().AddForce (jumpVector, ForceMode2D.Force);
 		}
 		else if (Input.GetKey(KeyCode.W))
-			{
+		{
 			GetComponent<Rigidbody2D>().AddForce (jumpVector2, ForceMode2D.Force);
-			}
+		}
 	}
-		
+
+	/**********************************************************
+	 * updateHealth: Sets the current health equal to the
+	 * health located in HealthScript.
+	 * *******************************************************/
+	void updateHealth()
+	{
+		health = GetComponent<HealthScript> ().health;
+	}
+
+	/**********************************************************
+	 * Triggers updateHealth when the player comes into contact
+	 * with spike.
+	 **********************************************************/
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other.gameObject.name == "Spike")
+		{
+			updateHealth ();
+		}
+	}
 }
