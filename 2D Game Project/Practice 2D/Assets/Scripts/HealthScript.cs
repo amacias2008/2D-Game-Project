@@ -52,7 +52,7 @@ public class HealthScript : MonoBehaviour {
 	void TakeDamage()
 	{
 		health -= 20;
-		if (health == 0)
+		if (health < 0)
 			health = maxHealth;
 		updateHealthBar (health);
 	}
