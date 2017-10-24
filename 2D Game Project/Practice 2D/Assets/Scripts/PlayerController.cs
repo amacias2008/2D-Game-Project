@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour {
 
 	public float health;
 
+    public int weapon = 0; 
+
 	void Awake()
 	{
 
 	}
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -89,7 +92,15 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(other.gameObject.name == "Spike")
 		{
-			updateHealth ();
+            updateHealth ();
 		}
-	}
+    }
+
+    /**********************************************************
+	 * Sets the current weapon equal to the collected weapon.
+	 **********************************************************/
+     public void EquipItem(int itemType)
+    {
+        weapon = itemType;
+    }
 }
