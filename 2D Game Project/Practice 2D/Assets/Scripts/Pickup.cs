@@ -30,4 +30,9 @@ public class Pickup : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+	public void SetTypeID(int id)
+	{
+		typeID = id;
+	}
 }
