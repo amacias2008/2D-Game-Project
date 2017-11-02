@@ -626,9 +626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2209f984974223946bf3dd817ceb75d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemSpawnRate: 1
+  ItemSpawnRate: 2
   MaxItemCount: 5
-  MinSpawnDistance: 1
+  MinSpawnDistance: 2
 --- !u!4 &1598704115
 Transform:
   m_ObjectHideFlags: 0
