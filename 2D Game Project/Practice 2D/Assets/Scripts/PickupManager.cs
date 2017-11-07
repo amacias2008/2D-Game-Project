@@ -6,7 +6,7 @@ public class PickupManager : MonoBehaviour
 {
     public float ItemSpawnRate = 2; // item spawn chance each update
     public int MaxItemCount = 5; // items stop spawning when count reaches this
-    public float MinSpawnDistance = 2; // items always spawn at least this far from both players and other items
+    public float MinSpawnDistance = 1; // items always spawn at least this far from both players and other items
 
     /*
     // players start with a knife equipped
@@ -45,31 +45,33 @@ public class PickupManager : MonoBehaviour
     // Adds a Pickup to the game field
     void SpawnItem()
     {
+        int randomType = Random.Range(1, 10);
+
         // Choose spawn location using MinSpawnDistance
         Vector2 loc = ChooseSpawnLocation();
 
         // Create Pickup and set location
-        GameObject go = (GameObject)Instantiate(Resources.Load("PickupPrefab"));
+        GameObject go = (GameObject)Instantiate(Resources.Load("PickupPrefab" + randomType));
         Pickup p = go.GetComponent<Pickup>();
         go.transform.position = loc;
 
 		// TODO: Use item spawn frequencies
-		p.SetTypeID(Random.Range(1, 10));
-
-		// TODO: Update appearance of Pickup to match typeID
+		p.SetTypeID(randomType);
     }
 
 	// Choose spawn location using MinSpawnDistance
 	Vector2 ChooseSpawnLocation()
 	{
-		Vector2 TestLoc = new Vector2(Random.Range(-4f, 4f), Random.Range(0f, 1f));
+		Vector2 TestLoc = new Vector2 (Random.Range(-4f, 4f), Random.Range(0, 1.5f));
 		int attempts = 0;
 
 		// Try to move the location up to 10 times to find sufficient open space
 		while (!IsThisLocationAcceptable(TestLoc) && attempts < 10) {
-            TestLoc = new Vector2 (Random.Range(-4f, 4f), Random.Range(0f, 1f));
+            TestLoc = new Vector2 (Random.Range(-4f, 4f), Random.Range(0, 1.5f));
 			attempts++;
 		}
+
+        //Debug.Log("Item location selection took " + attempts + " attempts.");
 
 		return TestLoc;
 	}
@@ -82,7 +84,7 @@ public class PickupManager : MonoBehaviour
 		var players = GameObject.FindGameObjectsWithTag("Player");
 		foreach (var obj in players) {
 			if (Vector2.Distance (loc, obj.transform.position) < MinSpawnDistance) {
-				acceptable = false;
+                acceptable = false;
 			}
 		}
 

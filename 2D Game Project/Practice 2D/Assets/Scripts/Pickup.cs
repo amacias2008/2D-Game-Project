@@ -10,7 +10,6 @@ public class Pickup : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        typeID = 1;
     }
 	
 	// Update is called once per frame
@@ -34,5 +33,5 @@ public class Pickup : MonoBehaviour {
 	public void SetTypeID(int id)
 	{
 		typeID = id;
-	}
+    }
 }

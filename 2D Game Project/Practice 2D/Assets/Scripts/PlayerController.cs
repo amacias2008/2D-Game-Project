@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour {
 	 **********************************************************/
      public void EquipItem(int itemType)
     {
-        weapon = itemType;
+        //weapon = itemType;
+
+        Debug.Log("Player collected Pickup type " + itemType);
     }
 }
