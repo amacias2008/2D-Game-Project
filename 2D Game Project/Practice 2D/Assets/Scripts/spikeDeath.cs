@@ -10,10 +10,10 @@ public class spikeDeath : MonoBehaviour {
 	 * does not destroy the game player and we can implement
 	 * the health bar.
 	 **********************************************************/
-	/*void OnTriggerEnter2D(Collider2D other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Player") {
 			other.transform.position = SpawnPoint;
 		}
-	}*/
+	}
 }
