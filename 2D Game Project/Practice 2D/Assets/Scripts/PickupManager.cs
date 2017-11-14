@@ -18,7 +18,7 @@ public class PickupManager : MonoBehaviour
     private float Item6Frequency = 1; // ranged 3: minigun
     private float Item7Frequency = 2; // powerup 1: fury
     private float Item8Frequency = 2; // powerup 2: agility
-    private float Item9Frequency = 2; // powerup 3: shield
+    private float Item9Frequency = 2; // powerup 3: vigor
     */
 
     // Use this for initialization
