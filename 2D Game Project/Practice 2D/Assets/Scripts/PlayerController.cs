@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
     void UpdateHorizontalMovement()
     {
         // WALK LEFT
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
         {
             // walking acceleration
             if (isGrounded)
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
                 currentSpeed -= walkAccelerationAir;
         }
         // WALK RIGHT
-        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
         {
             // walking acceleration
             if (isGrounded)
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
         }
         // Key is pressed on ground
-        else if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        else if (Input.GetKeyDown(KeyCode.W) && isGrounded && !Input.GetKey(KeyCode.LeftShift))
         {
             timer = 0;
             canJump = true;
@@ -345,12 +345,25 @@ public class PlayerController : MonoBehaviour
 	 * ********************************************************/
     void Flip()
     {
-        if (currentSpeed > 0 && !facingRight || currentSpeed < 0 && facingRight)
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
-            facingRight = !facingRight;
-            Vector3 temp = transform.localScale;
-            temp.x *= -1;
-            transform.localScale = temp;
+            if (currentSpeed > 0 && !facingRight || currentSpeed < 0 && facingRight)
+            {
+                facingRight = !facingRight;
+                Vector3 temp = transform.localScale;
+                temp.x *= -1;
+                transform.localScale = temp;
+            }
+        }
+        else 
+        {
+            if (aimVector.x > 0 && !facingRight || aimVector.x < 0 && facingRight)
+            {
+                facingRight = !facingRight;
+                Vector3 temp = transform.localScale;
+                temp.x *= -1;
+                transform.localScale = temp;
+            }
         }
     }
 
