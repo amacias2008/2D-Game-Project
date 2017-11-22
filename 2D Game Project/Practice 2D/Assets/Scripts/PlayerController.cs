@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
 
     //public AudioClip footstep;
 
+    public Text debugText;
+
 
     // Use this for initialization
     void Start()
@@ -85,6 +87,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         healthScript = GetComponent<HealthScript>();
         previousWeapon = weapon;
+        debugText.text = "";
     }
 
     // Update is called once per frame
@@ -94,6 +97,8 @@ public class PlayerController : MonoBehaviour
         UpdatePowerupEffects();
         UpdateMovement();
         UpdateAttack();
+
+        UpdateDebugText();
     }
 
     // Update variables used for timers of powerups & weapons
@@ -475,6 +480,39 @@ public class PlayerController : MonoBehaviour
                 break;
             case 4:
                 EquipPistol();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Update Text field with weapon info
+    void UpdateDebugText()
+    {
+        debugText.text = "Weapon: ";
+
+        switch (weapon)
+        {
+            case 0:
+                debugText.text += "Knife";
+                break;
+            case 1:
+                debugText.text += "Sword";
+                break;
+            case 2:
+                debugText.text += "Spear";
+                break;
+            case 3:
+                debugText.text += "Chainsaw";
+                break;
+            case 4:
+                debugText.text += "Pistol";
+                break;
+            case 5:
+                debugText.text += "Plasma Rifle";
+                break;
+            case 6:
+                debugText.text += "Minigun";
                 break;
             default:
                 break;
