@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 61030d79c7424454c9e97977467a1667
-timeCreated: 1510038494
+timeCreated: 1511341780
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,7 +8,7 @@ TextureImporter:
     21300002: PickupRifle
     21300004: PickupMinigun
     21300006: PickupSword
-    21300008: itemsprites_0
+    21300008: PickupBlank
     21300010: PickupSpear
     21300012: PickupChainsaw
     21300014: PickupAgility
@@ -206,6 +206,20 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PickupBlank
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

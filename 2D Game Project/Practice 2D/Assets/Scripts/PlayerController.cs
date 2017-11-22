@@ -36,7 +36,14 @@ public class PlayerController : MonoBehaviour
     public int weapon = 0;
     private int previousWeapon = 0;
     private float fireRateMult = 1;
+    private float bulletSpeedBase = 0.1f;
     private float bulletSpeedMult = 1;
+    private float bulletSpawnDist = 0.5f;
+
+    //Aiming variables
+    private Vector2 aimVector = new Vector2(1, 0);
+    private bool inputUp, inputDown, inputLeft, inputRight;
+    private bool facingRight = true;
 
     //Weapon fire rates (in seconds of cooldown time)
     private float FireRateKnife = 1f;
@@ -48,8 +55,8 @@ public class PlayerController : MonoBehaviour
     private float FireRateMinigun = 0.15f;
 
     //Powerup strength
-    private float FuryFireRateMult = 1.2f;
-    private float FuryBulletSpeedMult = 1.5f;
+    private float FuryFireRateMult = 2f;
+    private float FuryBulletSpeedMult = 2f;
     private float AgilitySpeedMult = 1.5f;
     private float AgilityJumpMult = 1.2f;
     private float VigorRegenRate = 0.1f;
@@ -61,7 +68,7 @@ public class PlayerController : MonoBehaviour
     private float FuryDuration = 10;
     private float AgilityDuration = 10;
     private float InvulnerabilityDuration = 3;
-    private float RegenerationDuration = 13;
+    private float RegenerationDuration = 10;
 
     //Weapon and Powerup status variables
     private int PlasmaRifleAmmoRemaining = 0;
@@ -71,23 +78,17 @@ public class PlayerController : MonoBehaviour
     private float AgilityTimeRemaining = 0;
     private float InvulnerabilityTimeRemaining = 0;
     private float RegenerationTimeRemaining = 0;
-    private float TimeSinceLastAttack = 0;
-
-    //Animation
-    Animator anim;
-
-    //public AudioClip footstep;
-
+    private float TimeSinceLastAttack = 10;
+   
     public Text debugText;
+    public Text debugText2;
 
 
     // Use this for initialization
     void Start()
     {
-        anim = GetComponent<Animator>();
         healthScript = GetComponent<HealthScript>();
         previousWeapon = weapon;
-        debugText.text = "";
     }
 
     // Update is called once per frame
@@ -96,6 +97,7 @@ public class PlayerController : MonoBehaviour
         UpdateTimeVariables();
         UpdatePowerupEffects();
         UpdateMovement();
+        UpdateAiming();
         UpdateAttack();
 
         UpdateDebugText();
@@ -186,7 +188,7 @@ public class PlayerController : MonoBehaviour
     void UpdateHorizontalMovement()
     {
         // WALK LEFT
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S))
         {
             // walking acceleration
             if (isGrounded)
@@ -195,7 +197,7 @@ public class PlayerController : MonoBehaviour
                 currentSpeed -= walkAccelerationAir;
         }
         // WALK RIGHT
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S))
         {
             // walking acceleration
             if (isGrounded)
@@ -274,6 +276,84 @@ public class PlayerController : MonoBehaviour
             jumpsCurrent = jumpsTotal;
     }
 
+    // Update aiming
+    void UpdateAiming()
+    {
+        Flip();
+
+        inputUp = Input.GetKey(KeyCode.W);
+        inputDown = Input.GetKey(KeyCode.S);
+        inputLeft = Input.GetKey(KeyCode.A);
+        inputRight = Input.GetKey(KeyCode.D);
+
+        if (inputUp)
+        {
+            if(inputLeft)
+            {
+                aimVector = new Vector2(-1, 1).normalized; // up-left
+            }
+            else if(inputRight)
+            {
+                aimVector = new Vector2(1, 1).normalized; // up-right
+            }
+            else
+            {
+                aimVector = new Vector2(0, 1).normalized; // up
+            }
+        }
+        else if (inputDown)
+        {
+            if (inputLeft)
+            {
+                aimVector = new Vector2(-1, -1).normalized; // down-left
+            }
+            else if (inputRight)
+            {
+                aimVector = new Vector2(1, -1).normalized; // down-right
+            }
+            else
+            {
+                aimVector = new Vector2(0, -1).normalized; // down
+            }
+        }
+        else
+        {
+            if (inputLeft) 
+            {
+                aimVector = new Vector2(-1, 0).normalized; // left
+            }
+            else if (inputRight)
+            {
+                aimVector = new Vector2(1, 0).normalized; // right
+            }
+            else
+            {
+                if (facingRight) aimVector = new Vector2(1, 0).normalized; // right
+                else aimVector = new Vector2(-1, 0).normalized; // left
+            }
+        }
+    }
+
+    /**********************************************************
+	 * This flip method is used to determine if we are facing
+	 * right or facing left. Facing left is set when
+	 * 1) Speed > 0 and we are facing left OR
+	 * 2) Speed < 0 and we are facing right
+	 * Uses a temp Vector variable to temporarily store the 
+	 * local transform variables and then set it to the 
+	 * opposite value.
+	 * ********************************************************/
+    void Flip()
+    {
+        if (currentSpeed > 0 && !facingRight || currentSpeed < 0 && facingRight)
+        {
+            facingRight = !facingRight;
+            Vector3 temp = transform.localScale;
+            temp.x *= -1;
+            transform.localScale = temp;
+        }
+    }
+
     // Get player input for attacking
     void UpdateAttack()
     {
@@ -329,6 +409,18 @@ public class PlayerController : MonoBehaviour
     {
         TimeSinceLastAttack = 0;
 
+        // Fire bullet
+        if (weapon > 3)
+        {
+            GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
+            go.transform.position = transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist;
+
+            BulletController bullet = go.GetComponent<BulletController>();
+            bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);
+            if (weapon == 5)
+                bullet.SetRicochet (true);
+        }
+
         // if Plasma Rifle is equipped, update ammo
         if (weapon == 5)
         {
@@ -373,26 +465,30 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        // This readies an attack after picking up a weapon
+        if(itemType < 7)
+            TimeSinceLastAttack = 10;
     }
 
     // Item 1 Collected
     void EquipSword()
     {
-        Debug.Log("Player equipped Sword");
+        //Debug.Log("Player equipped Sword");
         weapon = 1;
     }
 
     // Item 2 Collected
     void EquipSpear()
     {
-        Debug.Log("Player equipped Spear");
+        //Debug.Log("Player equipped Spear");
         weapon = 2;
     }
 
     // Item 3 Collected
     void EquipChainsaw()
     {
-        Debug.Log("Player equipped Chainsaw");
+        //Debug.Log("Player equipped Chainsaw");
 
         // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
         if (!(weapon == 3 || weapon == 5 || weapon == 6))
@@ -405,14 +501,14 @@ public class PlayerController : MonoBehaviour
     // Item 4 Collected
     void EquipPistol()
     {
-        Debug.Log("Player equipped Pistol");
+        //Debug.Log("Player equipped Pistol");
         weapon = 4;
     }
 
     // Item 5 Collected
     void EquipPlasmaRifle()
     {
-        Debug.Log("Player equipped Plasma Rifle");
+        //Debug.Log("Player equipped Plasma Rifle");
 
         // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
         if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
@@ -424,7 +520,7 @@ public class PlayerController : MonoBehaviour
     // Item 6 Collected
     void EquipMinigun()
     {
-        Debug.Log("Player equipped Minigun");
+        //Debug.Log("Player equipped Minigun");
 
         // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
         if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
@@ -436,21 +532,21 @@ public class PlayerController : MonoBehaviour
     // Item 7 Collected
     void EquipFury()
     {
-        Debug.Log("Player equipped Fury");
+        //Debug.Log("Player equipped Fury");
         FuryTimeRemaining = FuryDuration;
     }
 
     // Item 8 Collected
     void EquipAgility()
     {
-        Debug.Log("Player equipped Agility");
+        //Debug.Log("Player equipped Agility");
         AgilityTimeRemaining = AgilityDuration;
     }
 
     // Item 9 Collected
     void EquipVigor()
     {
-        Debug.Log("Player equipped Vigor");
+        //Debug.Log("Player equipped Vigor");
         InvulnerabilityTimeRemaining = InvulnerabilityDuration;
         RegenerationTimeRemaining = RegenerationDuration;
     }
@@ -459,7 +555,7 @@ public class PlayerController : MonoBehaviour
     // Only needed for use in EquipPreviousWeapon()
     void EquipKnife()
     {
-        Debug.Log("Player equipped Knife");
+        //Debug.Log("Player equipped Knife");
         weapon = 0;
     }
 
@@ -486,11 +582,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update Text field with weapon info
+    // Update Text fields with debug info
     void UpdateDebugText()
     {
-        debugText.text = "Weapon: ";
-
+        debugText.text = "";
         switch (weapon)
         {
             case 0:
@@ -517,5 +612,71 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+
+        debugText2.text = "";
+        if (weapon == 0)
+        {
+            debugText2.text += "Attack: ";
+            if (TimeSinceLastAttack * fireRateMult > FireRateKnife) debugText2.text += "Ready \n";
+            else debugText2.text += (FireRateKnife - (TimeSinceLastAttack * fireRateMult)) + " \n";
+        }
+        else if (weapon == 1)
+        {
+            debugText2.text += "Attack: ";
+            if (TimeSinceLastAttack * fireRateMult > FireRateSword) debugText2.text += "Ready \n";
+            else debugText2.text += (FireRateSword - (TimeSinceLastAttack * fireRateMult)) + " \n";
+        }
+        else if (weapon == 2)
+        {
+            debugText2.text += "Attack: ";
+            if (TimeSinceLastAttack * fireRateMult > FireRateSpear) debugText2.text += "Ready \n";
+            else debugText2.text += (FireRateSpear - (TimeSinceLastAttack * fireRateMult)) + " \n";
+        }
+        else if (weapon == 3)
+            debugText2.text += "Chainsaw: " + ChainsawTimeRemaining + "\n";
+
+        else if (weapon == 4)
+            debugText2.text += "Ammo: Unlimited \n";
+
+        else if (weapon == 5)
+            debugText2.text += "Ammo: " + PlasmaRifleAmmoRemaining + "\n";
+
+        else if (weapon == 6)
+            debugText2.text += "Minigun: " + MinigunTimeRemaining + "\n";
+
+
+        if(weapon == 3 || weapon == 5 || weapon == 6)
+        {
+            debugText2.text += "Next: ";
+            switch (previousWeapon)
+            {
+                case 0:
+                    debugText2.text += "Knife \n";
+                    break;
+                case 1:
+                    debugText2.text += "Sword \n";
+                    break;
+                case 2:
+                    debugText2.text += "Spear \n";
+                    break;
+                case 4:
+                    debugText2.text += "Pistol \n";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (InvulnerabilityTimeRemaining > 0)
+            debugText2.text += "Invuln: " + InvulnerabilityTimeRemaining + "\n";
+
+        if (RegenerationTimeRemaining > 0)
+            debugText2.text += "Regen: " + RegenerationTimeRemaining + "\n";
+
+        if (AgilityTimeRemaining > 0)
+            debugText2.text += "Agility: " + AgilityTimeRemaining + "\n";
+
+        if (FuryTimeRemaining > 0)
+            debugText2.text += "Fury: " + FuryTimeRemaining + "\n";
     }
 }

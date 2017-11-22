@@ -4,12 +4,12 @@ using System.Collections;
 public class Pickup : MonoBehaviour {
 
     private int typeID;
-    private Rigidbody rb;
+    //private Rigidbody rb;
     private PlayerController player;
 
     // Use this for initialization
     void Start () {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
