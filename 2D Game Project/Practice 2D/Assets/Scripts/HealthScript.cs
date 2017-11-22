@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class HealthScript : MonoBehaviour {
 
-	public float health;						//Health of player
 	public float maxHealth = 100.0f;			//Maximum health
+    private float health;                       //Health of player
 
-	public Image GreenHealthBar;				//Used as foreground color of health bar
+    public Image GreenHealthBar;				//Used as foreground color of health bar
 	public Image RedHealthBar;					//Used as background color of health bar
 
+    PlayerController player;
 
 	//Set health equal to max health
 	void Awake()
@@ -21,7 +22,7 @@ public class HealthScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		
+        player = GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
@@ -29,6 +30,11 @@ public class HealthScript : MonoBehaviour {
 	{
 		
 	}
+
+    public float GetHealth()
+    {
+        return health;
+    }
 
 	/**********************************************************
 	 * updateHealthBar:
@@ -42,33 +48,52 @@ public class HealthScript : MonoBehaviour {
 		GreenHealthBar.fillAmount = health / maxHealth;
 	}
 
-	/**********************************************************
+    /**********************************************************
 	 * TakeDamage:
-	 * 	@params none
-	 * This method takes away health by 20 when it comes into
-	 * contact with the spike. 
+	 * 	@params val: amount to damage
+	 * This method lowers the player health by some value. 
 	 * It then updates the health bar UI.
 	 **********************************************************/
-	void TakeDamage()
-	{
-		health -= 20;
-		if (health < 0)
-			health = maxHealth;
-		updateHealthBar (health);
-	}
+    public void TakeDamage(float val)
+    {
+        if (player.IsInvulnerable()) return;
 
-	/**********************************************************
+        health -= val;
+        if (health < 0)
+        {
+            health = maxHealth;
+            //dead = true;
+        }
+        updateHealthBar(health);
+    }
+
+    /**********************************************************
+	 * Heal:
+	 * 	@params val: amount to heal
+	 * This method heals the player by some value. 
+	 * It then updates the health bar UI.
+	 **********************************************************/
+    public void Heal(float val)
+    {
+        health += val;
+        if (health > maxHealth)
+            health = maxHealth;
+
+        updateHealthBar (health);
+    }
+
+    /**********************************************************
 	 * OnTriggerEnter2D():
 	 * 	@params : Other RigidBody collider.
 	 * This method is used to determine if the player has come
 	 * into contact with the spike. If it has, it calls the
 	 * function TakeDamage().
 	 **********************************************************/
-	void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other.gameObject.name == "Spike")
 		{
-			TakeDamage ();
+			TakeDamage (20);
 		}
 	}
 		

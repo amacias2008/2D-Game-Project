@@ -218,6 +218,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnPoint: {x: 0, y: 0}
+--- !u!1 &984193869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 984193870}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984193870
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 984193869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0242, y: -0.1101, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2046021034}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1363367209
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646f5ca035dcb2c4abe453ecc950dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 100
   GreenHealthBar: {fileID: 1380556026}
   RedHealthBar: {fileID: 2120102458}
@@ -429,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646f5ca035dcb2c4abe453ecc950dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 100
   GreenHealthBar: {fileID: 1380556026}
   RedHealthBar: {fileID: 2120102458}
@@ -559,7 +585,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.24394462, g: 0.30773476, b: 0.3455882, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -664,7 +690,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1782519149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.009, y: -0.105, z: 0}
+  m_LocalPosition: {x: -0.0238, y: -0.1048, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2046021034}
@@ -780,16 +806,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61728e8c00572d4c8a0a0e5de264f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedForce: 5
-  jumpVector: {x: 0, y: 100}
-  jumpVector2: {x: 0, y: -0}
-  isGrounded: 0
-  grounder: {fileID: 1782519150}
-  radiuss: 0.2
-  ground:
+  baseWalkSpeed: 5
+  walkAccelerationGround: 0.6
+  walkAccelerationAir: 0.3
+  stopFrictionGround: 0.6
+  stopFrictionAir: 0
+  jumpForce: 6
+  maxTime: 0.15
+  jumpsTotal: 2
+  point1: {fileID: 1782519150}
+  point2: {fileID: 984193870}
+  groundMask:
     serializedVersion: 2
     m_Bits: 256
-  health: 0
   weapon: 0
 --- !u!50 &2046021031
 Rigidbody2D:
@@ -805,7 +834,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 2
-  m_GravityScale: 3
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -881,6 +910,7 @@ Transform:
   m_LocalScale: {x: 3.1532595, y: 4.091255, z: 1.0228138}
   m_Children:
   - {fileID: 1782519150}
+  - {fileID: 984193870}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -920,7 +950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646f5ca035dcb2c4abe453ecc950dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 100
   GreenHealthBar: {fileID: 1380556026}
   RedHealthBar: {fileID: 2120102458}
