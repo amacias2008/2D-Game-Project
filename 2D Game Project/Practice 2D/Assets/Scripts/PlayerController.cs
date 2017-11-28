@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     //Movement variables
     public float baseWalkSpeed = 5;
@@ -94,6 +95,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (!isLocalPlayer) 
+		{
+			return;
+		}
         UpdateTimeVariables();
         UpdatePowerupEffects();
         UpdateMovement();
@@ -372,15 +377,16 @@ public class PlayerController : MonoBehaviour
     {
         // While Fire key is held down, attempt to attack
         if (Input.GetKey(KeyCode.Space))
-            AttemptAttack();
+            CmdAttemptAttack();
 
         // If Chainsaw or Minigun is equipped, constantly attack
         else if (weapon == 3 || weapon == 6)
-            AttemptAttack();
+            CmdAttemptAttack();
     }
 
    // Check if equipped weapon is ready to be fired
-    void AttemptAttack()
+	[Command]
+    void CmdAttemptAttack()
     {
         switch (weapon)
         {
@@ -430,6 +436,8 @@ public class PlayerController : MonoBehaviour
 
             BulletController bullet = go.GetComponent<BulletController>();
             bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);
+
+			NetworkServer.Spawn (go);
             if (weapon == 5)
                 bullet.SetRicochet (true);
         }

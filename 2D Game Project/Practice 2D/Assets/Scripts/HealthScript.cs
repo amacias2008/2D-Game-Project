@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class HealthScript : MonoBehaviour {
+public class HealthScript : NetworkBehaviour {
 
 	public float maxHealth = 100.0f;			//Maximum health
+	[SyncVar(hook = "GetHealth")]
     private float health;                       //Health of player
 
     public Image GreenHealthBar;				//Used as foreground color of health bar
@@ -56,6 +58,10 @@ public class HealthScript : MonoBehaviour {
 	 **********************************************************/
     public void TakeDamage(float val)
     {
+		if (!isServer) 
+		{
+			return;
+		}
         if (player.IsInvulnerable()) return;
 
         health -= val;
