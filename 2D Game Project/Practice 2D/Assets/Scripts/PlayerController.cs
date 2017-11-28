@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+	Animator anim;
     //Movement variables
     public float baseWalkSpeed = 5;
     public float walkAccelerationGround = 0.6f;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
         previousWeapon = weapon;
     }
@@ -191,6 +193,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
         {
             // walking acceleration
+			anim.SetBool ("Moving", true);
             if (isGrounded)
                 currentSpeed -= walkAccelerationGround;
             else
@@ -200,6 +203,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
         {
             // walking acceleration
+			anim.SetBool ("Moving", true);
             if (isGrounded)
                 currentSpeed += walkAccelerationGround;
             else
@@ -209,6 +213,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // stopping friction
+			anim.SetBool ("Moving", false);
             if (isGrounded) // on ground
             {
                 if (currentSpeed > stopFrictionGround) // if moving right
@@ -371,9 +376,10 @@ public class PlayerController : MonoBehaviour
     void UpdateAttack()
     {
         // While Fire key is held down, attempt to attack
-        if (Input.GetKey(KeyCode.Space))
-            AttemptAttack();
-
+		if (Input.GetKey (KeyCode.Space)) {
+			GetComponent<Animator> ().SetTrigger ("Shooting1");
+			AttemptAttack ();
+		}
         // If Chainsaw or Minigun is equipped, constantly attack
         else if (weapon == 3 || weapon == 6)
             AttemptAttack();
@@ -425,6 +431,7 @@ public class PlayerController : MonoBehaviour
         // Fire bullet
         if (weapon > 3)
         {
+			
             GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
             go.transform.position = transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist;
 
