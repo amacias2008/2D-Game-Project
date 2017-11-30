@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
     public Text debugText;
     public Text debugText2;
 
+    public Vector2 spawnLoc;
+
 
     // Use this for initialization
     void Start()
@@ -103,6 +105,7 @@ public class PlayerController : MonoBehaviour
 		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
         previousWeapon = weapon;
+        spawnLoc = transform.position;
     }
 
     // Update is called once per frame
@@ -113,6 +116,8 @@ public class PlayerController : MonoBehaviour
         UpdateMovement();
         UpdateAiming();
         UpdateAttack();
+
+        CheckIfPlayerFell();
 
         UpdateDebugText();
     }
@@ -668,6 +673,17 @@ public class PlayerController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    // Reset player location if fell off map
+    void CheckIfPlayerFell()
+    {
+        if (transform.position.y < -20)
+        {
+            transform.position = spawnLoc;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            healthScript.Heal(100);
         }
     }
 
