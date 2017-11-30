@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+	public int playerNumber = 1;
+
 	Animator anim;
 
     //Movement variables
@@ -207,7 +209,8 @@ public class PlayerController : MonoBehaviour
     void UpdateHorizontalMovement()
     {
         // WALK LEFT
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
+        if (playerNumber == 1 && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift) ||
+			playerNumber == 2 && Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.Keypad0))
         {
             // walking acceleration
 			anim.SetBool ("Moving", true);
@@ -217,7 +220,8 @@ public class PlayerController : MonoBehaviour
                 currentSpeed -= walkAccelerationAir;
         }
         // WALK RIGHT
-        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
+		else if (playerNumber == 1 && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift) ||
+			playerNumber == 2 && Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.Keypad0))
         {
             // walking acceleration
 			anim.SetBool ("Moving", true);
@@ -267,7 +271,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapArea(foot1.position, foot1.position, groundMask);
 
         // Key is pressed in air
-        if (Input.GetKeyDown(KeyCode.W) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0)
+		if ((playerNumber == 1 && Input.GetKeyDown(KeyCode.W) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0) ||
+			(playerNumber == 2 && Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0))
         {
             jumpsCurrent--;
             timer = 0;
@@ -275,14 +280,16 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
         }
         // Key is pressed on ground
-        else if (Input.GetKeyDown(KeyCode.W) && isGrounded && !Input.GetKey(KeyCode.LeftShift))
+		else if ((playerNumber == 1 && Input.GetKeyDown(KeyCode.W) && isGrounded && !Input.GetKey(KeyCode.LeftShift)) || 
+			(playerNumber == 2 && Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !Input.GetKey(KeyCode.LeftShift)))
         {
             timer = 0;
             canJump = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
         }
         // Key is held down and timer hasn't reached maxTime
-        else if (Input.GetKey(KeyCode.W) && canJump && timer < maxTime)
+		else if ((playerNumber == 1 && Input.GetKey(KeyCode.W) && canJump && timer < maxTime) || 
+			(playerNumber == 2 && Input.GetKey(KeyCode.UpArrow) && canJump && timer < maxTime))
         {
             timer += Time.deltaTime;
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
@@ -303,10 +310,10 @@ public class PlayerController : MonoBehaviour
     {
         Flip();
 
-        inputUp = Input.GetKey(KeyCode.W);
-        inputDown = Input.GetKey(KeyCode.S);
-        inputLeft = Input.GetKey(KeyCode.A);
-        inputRight = Input.GetKey(KeyCode.D);
+		inputUp = (playerNumber == 1 && Input.GetKey(KeyCode.W)) || (playerNumber == 2 && Input.GetKey(KeyCode.UpArrow));
+		inputDown = (playerNumber == 1 && Input.GetKey(KeyCode.S)) || (playerNumber == 2 && Input.GetKey(KeyCode.DownArrow));
+		inputLeft = (playerNumber == 1 && Input.GetKey(KeyCode.A)) || (playerNumber == 2 && Input.GetKey(KeyCode.LeftArrow));
+		inputRight = (playerNumber == 1 && Input.GetKey(KeyCode.D)) || (playerNumber == 2 && Input.GetKey(KeyCode.RightArrow));
 
         if (inputUp)
         {
@@ -367,7 +374,7 @@ public class PlayerController : MonoBehaviour
 	 * ********************************************************/
     void Flip()
     {
-        if (!Input.GetKey(KeyCode.LeftShift))
+		if ((playerNumber == 1 && !Input.GetKey(KeyCode.LeftShift)) || (playerNumber == 2 && !Input.GetKey(KeyCode.RightShift)))
         {
             if (currentSpeed > 0 && !facingRight || currentSpeed < 0 && facingRight)
             {
@@ -393,12 +400,12 @@ public class PlayerController : MonoBehaviour
     void UpdateAttack()
     {
         // While Fire key is held down, attempt to attack
-		if (Input.GetKey (KeyCode.Space)) {
+		if ((playerNumber == 1 && Input.GetKey (KeyCode.Space)) || (playerNumber == 2 && Input.GetKey (KeyCode.Keypad0))) {
 			GetComponent<Animator> ().SetTrigger ("Shooting1");
 			AttemptAttack ();
 		}
         // If Chainsaw or Minigun is equipped, constantly attack
-        else if (weapon == 3 || weapon == 6)
+		else if (weapon == 3 || weapon == 6)
             AttemptAttack();
     }
 
