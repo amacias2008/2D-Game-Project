@@ -56,7 +56,9 @@ public class HealthScript : MonoBehaviour {
 	 **********************************************************/
     public void TakeDamage(float val)
     {
-        if (player.IsInvulnerable()) return;
+        if (player != null)
+            if (player.IsInvulnerable())
+                return;
 
         health -= val;
         if (health < 0)
