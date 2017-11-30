@@ -394,7 +394,7 @@ public class PlayerController : MonoBehaviour
     {
         // While Fire key is held down, attempt to attack
 		if (Input.GetKey (KeyCode.Space)) {
-			GetComponent<Animator> ().SetTrigger ("Shooting1");
+			
 			AttemptAttack ();
 		}
         // If Chainsaw or Minigun is equipped, constantly attack
@@ -410,14 +410,17 @@ public class PlayerController : MonoBehaviour
             case 0:
                 if (TimeSinceLastAttack * fireRateMult > FireRateKnife)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Melee");
                 break;
             case 1:
                 if (TimeSinceLastAttack * fireRateMult > FireRateSword)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Melee");
                 break;
             case 2:
                 if (TimeSinceLastAttack * fireRateMult > FireRateSpear)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Melee");
                 break;
             case 3:
                 if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw)
@@ -426,14 +429,17 @@ public class PlayerController : MonoBehaviour
             case 4:
                 if (TimeSinceLastAttack * fireRateMult > FireRatePistol)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Shooting1");
                 break;
             case 5:
                 if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Shooting1");
                 break;
             case 6:
                 if (TimeSinceLastAttack * fireRateMult > FireRateMinigun)
                     Attack();
+					GetComponent<Animator> ().SetTrigger ("Shooting1");
                 break;
             default:
                 break;
