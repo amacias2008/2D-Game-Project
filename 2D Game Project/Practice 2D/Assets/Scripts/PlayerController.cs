@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
     public int weapon = 0;
     private int previousWeapon = 0;
     private float fireRateMult = 1;
-    private float bulletSpeedBase = 0.1f;
+    private float bulletSpeedBase = 5.0f;
     private float bulletSpeedMult = 1;
     private float bulletSpawnDist = 0.5f;
 
@@ -103,7 +103,7 @@ public class PlayerController : NetworkBehaviour
         UpdatePowerupEffects();
         UpdateMovement();
         UpdateAiming();
-        UpdateAttack();
+        CmdUpdateAttack();
 
         UpdateDebugText();
     }
@@ -373,7 +373,8 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Get player input for attacking
-    void UpdateAttack()
+	[Command]
+    void CmdUpdateAttack()
     {
         // While Fire key is held down, attempt to attack
         if (Input.GetKey(KeyCode.Space))
@@ -392,31 +393,31 @@ public class PlayerController : NetworkBehaviour
         {
             case 0:
                 if (TimeSinceLastAttack * fireRateMult > FireRateKnife)
-                    Attack();
+                    CmdAttack();
                 break;
             case 1:
                 if (TimeSinceLastAttack * fireRateMult > FireRateSword)
-                    Attack();
+                    CmdAttack();
                 break;
             case 2:
                 if (TimeSinceLastAttack * fireRateMult > FireRateSpear)
-                    Attack();
+                    CmdAttack();
                 break;
             case 3:
                 if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw)
-                    Attack();
+                    CmdAttack();
                 break;
             case 4:
                 if (TimeSinceLastAttack * fireRateMult > FireRatePistol)
-                    Attack();
+                    CmdAttack();
                 break;
             case 5:
                 if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle)
-                    Attack();
+                    CmdAttack();
                 break;
             case 6:
                 if (TimeSinceLastAttack * fireRateMult > FireRateMinigun)
-                    Attack();
+                    CmdAttack();
                 break;
             default:
                 break;
@@ -424,20 +425,28 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Attack using the equipped weapon
-    void Attack()
+	[Command]
+    void CmdAttack()
     {
         TimeSinceLastAttack = 0;
 
         // Fire bullet
         if (weapon > 3)
         {
-            GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
+            /*GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
             go.transform.position = transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist;
 
             BulletController bullet = go.GetComponent<BulletController>();
-            bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);
+            bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);*/
 
-			NetworkServer.Spawn (go);
+			var networkBullet = (GameObject)Instantiate (Resources.Load ("Bullet"));
+			networkBullet.transform.position = transform.position + new Vector3 (aimVector.x, aimVector.y, 0) * bulletSpawnDist;
+
+			BulletController bullet = networkBullet.GetComponent<BulletController>();
+			bullet.SetVelocity (aimVector * bulletSpeedBase * bulletSpeedMult);
+			networkBullet.GetComponent<Rigidbody2D> ().velocity = bullet.vel;
+
+			NetworkServer.Spawn (networkBullet);
             if (weapon == 5)
                 bullet.SetRicochet (true);
         }

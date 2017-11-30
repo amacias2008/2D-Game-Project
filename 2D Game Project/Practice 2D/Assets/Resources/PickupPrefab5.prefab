@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212123961228446770}
   - component: {fileID: 61994404196321704}
   - component: {fileID: 114322310283332292}
+  - component: {fileID: 114545369967176492}
   m_Layer: 0
   m_Name: PickupPrefab5
   m_TagString: Pickup
@@ -78,6 +79,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76beec7932d44a4bb5c409b1e236e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114545369967176492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1555373142032984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 91
+    i1: 151
+    i2: 236
+    i3: 247
+    i4: 85
+    i5: 74
+    i6: 171
+    i7: 196
+    i8: 27
+    i9: 177
+    i10: 70
+    i11: 104
+    i12: 83
+    i13: 218
+    i14: 161
+    i15: 121
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212123961228446770
 SpriteRenderer:
   m_ObjectHideFlags: 1

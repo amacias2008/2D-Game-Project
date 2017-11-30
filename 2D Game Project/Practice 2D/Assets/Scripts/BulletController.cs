@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position = transform.position + new Vector3(vel.x, vel.y, 0);
+        //transform.position = transform.position + new Vector3(vel.x, vel.y, 0);
 
         lifespan -= Time.deltaTime;
         if (lifespan < 0) Destroy(gameObject);

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Pickup : MonoBehaviour {
+public class Pickup : NetworkBehaviour {
 
     private int typeID;
     //private Rigidbody rb;
