@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour
 {
 	Animator anim;
+
     //Movement variables
     public float baseWalkSpeed = 5;
     public float walkAccelerationGround = 0.6f;
@@ -24,8 +25,8 @@ public class PlayerController : MonoBehaviour
     private int jumpsCurrent;
     private float jumpMult = 1;
 
-    public Transform point1;
-    public Transform point2;
+    public Transform foot1;
+    public Transform foot2;
     public LayerMask groundMask;
     private bool isGrounded;
     private bool canJump;
@@ -40,6 +41,17 @@ public class PlayerController : MonoBehaviour
     private float bulletSpeedBase = 0.1f;
     private float bulletSpeedMult = 1;
     private float bulletSpawnDist = 0.5f;
+
+    //Melee hitboxes
+    public LayerMask playerMask;
+    public Transform knifeHitboxA;
+    public Transform knifeHitboxB;
+    public Transform swordHitboxA;
+    public Transform swordHitboxB;
+    public Transform spearHitboxA;
+    public Transform spearHitboxB;
+    public Transform chainsawHitboxA;
+    public Transform chainsawHitboxB;
 
     //Aiming variables
     private Vector2 aimVector = new Vector2(1, 0);
@@ -247,7 +259,7 @@ public class PlayerController : MonoBehaviour
     // Get input and update jumping
     void UpdateJumping()
     {
-        isGrounded = Physics2D.OverlapArea(point1.position, point2.position, groundMask);
+        isGrounded = Physics2D.OverlapArea(foot1.position, foot1.position, groundMask);
 
         // Key is pressed in air
         if (Input.GetKeyDown(KeyCode.W) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0)
@@ -437,16 +449,73 @@ public class PlayerController : MonoBehaviour
 
             BulletController bullet = go.GetComponent<BulletController>();
             bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);
-            if (weapon == 5)
-                bullet.SetRicochet (true);
-        }
 
-        // if Plasma Rifle is equipped, update ammo
-        if (weapon == 5)
+            // Plasma Rifle
+            if (weapon == 5)
+            {
+                bullet.SetRicochet(true);
+                PlasmaRifleAmmoRemaining--;
+                if (PlasmaRifleAmmoRemaining <= 0) EquipPreviousWeapon();
+            }
+        }
+        // Melee attack
+        else CheckMeleeHit();
+    }
+
+    // Check if melee attack hit enemy
+    void CheckMeleeHit()
+    {
+        if (weapon == 0) // Knife
         {
-            PlasmaRifleAmmoRemaining--;
-            if (PlasmaRifleAmmoRemaining <= 0)
-                EquipPreviousWeapon();
+            if(Physics2D.OverlapArea(knifeHitboxA.position, knifeHitboxB.position, playerMask))
+            {
+                Collider2D hit = Physics2D.OverlapAreaAll(knifeHitboxA.position, knifeHitboxB.position, playerMask)[0];
+                if (hit.gameObject.tag == "Player")
+                {
+                    HealthScript h = hit.gameObject.GetComponent<HealthScript>();
+                    h.TakeDamage(10);
+                }
+                
+            }
+        }
+        else if (weapon == 1) // Sword
+        {
+            if (Physics2D.OverlapArea(swordHitboxA.position, swordHitboxB.position, playerMask))
+            {
+                Collider2D hit = Physics2D.OverlapAreaAll(swordHitboxA.position, swordHitboxB.position, playerMask)[0];
+                if (hit.gameObject.tag == "Player")
+                {
+                    HealthScript h = hit.gameObject.GetComponent<HealthScript>();
+                    h.TakeDamage(20);
+                }
+
+            }
+        }
+        else if (weapon == 2) // Spear
+        {
+            if (Physics2D.OverlapArea(spearHitboxA.position, spearHitboxB.position, playerMask))
+            {
+                Collider2D hit = Physics2D.OverlapAreaAll(spearHitboxA.position, spearHitboxB.position, playerMask)[0];
+                if (hit.gameObject.tag == "Player")
+                {
+                    HealthScript h = hit.gameObject.GetComponent<HealthScript>();
+                    h.TakeDamage(20);
+                }
+
+            }
+        }
+        else if (weapon == 3) // Chainsaw
+        {
+            if (Physics2D.OverlapArea(chainsawHitboxA.position, chainsawHitboxB.position, playerMask))
+            {
+                Collider2D hit = Physics2D.OverlapAreaAll(chainsawHitboxA.position, chainsawHitboxB.position, playerMask)[0];
+                if (hit.gameObject.tag == "Player")
+                {
+                    HealthScript h = hit.gameObject.GetComponent<HealthScript>();
+                    h.TakeDamage(100);
+                }
+
+            }
         }
     }
 
