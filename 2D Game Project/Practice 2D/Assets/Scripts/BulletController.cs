@@ -34,7 +34,12 @@ public class BulletController : MonoBehaviour {
         vel = v;
     }
 
-    // Set velocity vector
+    public Vector2 GetVelocity()
+    {
+        return vel;
+    }
+
+    // Set ricochet boolean
     public void SetRicochet(bool r)
     {
         ricochet = r;

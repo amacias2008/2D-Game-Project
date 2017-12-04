@@ -5,24 +5,27 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-	Animator anim;
+    public int playerNumber = 1;
 
     //Movement variables
     public float baseWalkSpeed = 5;
-    public float walkAccelerationGround = 0.6f;
-    public float walkAccelerationAir = 0.3f;
-    public float stopFrictionGround = 0.6f;
-    public float stopFrictionAir = 0f;
+    private float walkAccelerationGround = 0.6f;
+    private float walkAccelerationAir = 0.3f;
+    private float stopFrictionGround = 0.6f;
+    private float stopFrictionAir = 0.1f;
 
     private float currentSpeed = 0;
     private float speedMult = 1;
     private float[] previousX = new float[5];
 
+    private float disabledTimeRemaining = 0;
+    private float disabledTimeDuration = 0.5f;
+
     //Jump variables
     public float jumpForce = 6;
-    public float maxTime = 0.15f;
+    private float maxTime = 0.15f;
     private float timer;
-    public int jumpsTotal = 2;
+    private int jumpsTotal = 2;
     private int jumpsCurrent;
     private float jumpMult = 1;
 
@@ -36,12 +39,16 @@ public class PlayerController : MonoBehaviour
     HealthScript healthScript;
 
     //Weapon variables
-    public int weapon = 0;
+    private int weapon = 0;
     private int previousWeapon = 0;
     private float fireRateMult = 1;
     private float bulletSpeedBase = 0.1f;
     private float bulletSpeedMult = 1;
     private float bulletSpawnDist = 0.5f;
+
+    private Vector2 knifeLungeForce = new Vector2(3, 2);
+    private Vector2 spearKnockbackForce = new Vector2(5, 3);
+    private float swordReflectRadius = 1.5f;
 
     //Melee hitboxes
     public LayerMask playerMask;
@@ -60,11 +67,11 @@ public class PlayerController : MonoBehaviour
     private bool facingRight = true;
 
     //Weapon fire rates (in seconds of cooldown time)
-    private float FireRateKnife = 1f;
-    private float FireRateSword = 2f;
-    private float FireRateSpear = 2f;
-    private float FireRateChainsaw = 0.1f;
-    private float FireRatePistol = 0.5f;
+    private float FireRateKnife = 0.5f;
+    private float FireRateSword = 0.75f;
+    private float FireRateSpear = 1f;
+    private float FireRateChainsaw = 0.25f;
+    private float FireRatePistol = 0.6f;
     private float FireRatePlasmaRifle = 0.3f;
     private float FireRateMinigun = 0.15f;
 
@@ -73,7 +80,7 @@ public class PlayerController : MonoBehaviour
     private float FuryBulletSpeedMult = 2f;
     private float AgilitySpeedMult = 1.5f;
     private float AgilityJumpMult = 1.2f;
-    private float VigorRegenRate = 0.1f;
+    private float VigorRegenRate = 0.15f;
 
     //Powerup durations and weapon max ammo
     private int PlasmaRifleAmmoMax = 20;
@@ -94,18 +101,20 @@ public class PlayerController : MonoBehaviour
     private float RegenerationTimeRemaining = 0;
     private float TimeSinceLastAttack = 10;
    
+    //Other
     public Text debugText;
     public Text debugText2;
-
-    public Vector2 spawnLoc;
-
+    private Vector2 spawnLoc;
+    private Animator anim;
 
     // Use this for initialization
     void Start()
     {
 		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
+
         previousWeapon = weapon;
+
         spawnLoc = transform.position;
     }
 
@@ -121,7 +130,7 @@ public class PlayerController : MonoBehaviour
         CheckIfPlayerFell();
 
         UpdateDebugText();
-        debugText2.text = "" + currentSpeed + ", " + isGrounded;
+        //debugText2.text = "" + currentSpeed + ", " + isGrounded;
     }
 
     // Update variables used for timers of powerups & weapons
@@ -135,6 +144,7 @@ public class PlayerController : MonoBehaviour
         AgilityTimeRemaining -= delta;
         InvulnerabilityTimeRemaining -= delta;
         RegenerationTimeRemaining -= delta;
+        disabledTimeRemaining -= delta;
         
         TimeSinceLastAttack += delta;
 
@@ -209,7 +219,8 @@ public class PlayerController : MonoBehaviour
     void UpdateHorizontalMovement()
     {
         // WALK LEFT
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift))
+        if (playerNumber == 1 && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftShift) ||
+            playerNumber == 2 && Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightControl))
         {
             // walking acceleration
 			anim.SetBool ("Moving", true);
@@ -219,10 +230,11 @@ public class PlayerController : MonoBehaviour
                 currentSpeed -= walkAccelerationAir;
         }
         // WALK RIGHT
-        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift))
+        else if (playerNumber == 1 && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftShift) ||
+            playerNumber == 2 && Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.RightControl))
         {
             // walking acceleration
-			anim.SetBool ("Moving", true);
+            anim.SetBool ("Moving", true);
             if (isGrounded)
                 currentSpeed += walkAccelerationGround;
             else
@@ -259,8 +271,14 @@ public class PlayerController : MonoBehaviour
         else if (currentSpeed < -baseWalkSpeed)
             currentSpeed = -baseWalkSpeed;
 
+        // prevent player movement if disabled by Spear hit
+        if (disabledTimeRemaining > 0) currentSpeed = 0;
+
         // check if player rigidbody hit a wall while in air and should fall to the ground (was bug)
         CheckIfStuckFloating();
+
+        // Return (don't apply X force) if knife lunging OR movement disabled by spear knockback
+        if ((weapon == 0 && TimeSinceLastAttack < FireRateKnife) || disabledTimeRemaining > 0) return;
 
         // apply X velocity
         if ((weapon == 3 || weapon == 6) && AgilityTimeRemaining < 0) // chainsaw and minigun slow
@@ -294,7 +312,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapArea(foot1.position, foot1.position, groundMask);
 
         // Key is pressed in air
-        if (Input.GetKeyDown(KeyCode.W) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0)
+        if ((playerNumber == 1 && Input.GetKeyDown(KeyCode.W) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0) ||
+            (playerNumber == 2 && Input.GetKeyDown(KeyCode.UpArrow) && !isGrounded && jumpsCurrent > 1 && AgilityTimeRemaining > 0))
         {
             jumpsCurrent--;
             timer = 0;
@@ -302,14 +321,16 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
         }
         // Key is pressed on ground
-        else if (Input.GetKeyDown(KeyCode.W) && isGrounded && !Input.GetKey(KeyCode.LeftShift))
+        else if ((playerNumber == 1 && Input.GetKeyDown(KeyCode.W) && isGrounded && !Input.GetKey(KeyCode.LeftShift)) ||
+            (playerNumber == 2 && Input.GetKeyDown(KeyCode.UpArrow) && isGrounded && !Input.GetKey(KeyCode.RightControl)))
         {
             timer = 0;
             canJump = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
         }
         // Key is held down and timer hasn't reached maxTime
-        else if (Input.GetKey(KeyCode.W) && canJump && timer < maxTime)
+        else if ((playerNumber == 1 && Input.GetKey(KeyCode.W) && canJump && timer < maxTime) ||
+            (playerNumber == 2 && Input.GetKey(KeyCode.UpArrow) && canJump && timer < maxTime))
         {
             timer += Time.deltaTime;
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpForce * jumpMult); // jump
@@ -330,10 +351,10 @@ public class PlayerController : MonoBehaviour
     {
         Flip();
 
-        inputUp = Input.GetKey(KeyCode.W);
-        inputDown = Input.GetKey(KeyCode.S);
-        inputLeft = Input.GetKey(KeyCode.A);
-        inputRight = Input.GetKey(KeyCode.D);
+        inputUp = (playerNumber == 1 && Input.GetKey(KeyCode.W)) || (playerNumber == 2 && Input.GetKey(KeyCode.UpArrow));
+        inputDown = (playerNumber == 1 && Input.GetKey(KeyCode.S)) || (playerNumber == 2 && Input.GetKey(KeyCode.DownArrow));
+        inputLeft = (playerNumber == 1 && Input.GetKey(KeyCode.A)) || (playerNumber == 2 && Input.GetKey(KeyCode.LeftArrow));
+        inputRight = (playerNumber == 1 && Input.GetKey(KeyCode.D)) || (playerNumber == 2 && Input.GetKey(KeyCode.RightArrow));
 
         if (inputUp)
         {
@@ -394,7 +415,7 @@ public class PlayerController : MonoBehaviour
 	 * ********************************************************/
     void Flip()
     {
-        if (!Input.GetKey(KeyCode.LeftShift))
+        if ((playerNumber == 1 && !Input.GetKey(KeyCode.LeftShift)) || (playerNumber == 2 && !Input.GetKey(KeyCode.RightControl)))
         {
             if (currentSpeed > 0 && !facingRight || currentSpeed < 0 && facingRight)
             {
@@ -420,9 +441,10 @@ public class PlayerController : MonoBehaviour
     void UpdateAttack()
     {
         // While Fire key is held down, attempt to attack
-		if (Input.GetKey (KeyCode.Space)) {
-			
-			AttemptAttack ();
+        if ((playerNumber == 1 && Input.GetKey(KeyCode.Space)) || (playerNumber == 2 && Input.GetKey(KeyCode.Keypad0)))
+        {
+
+            AttemptAttack ();
 		}
         // If Chainsaw or Minigun is equipped, constantly attack
         else if (weapon == 3 || weapon == 6)
@@ -505,7 +527,15 @@ public class PlayerController : MonoBehaviour
     {
         if (weapon == 0) // Knife
         {
-            if(Physics2D.OverlapArea(knifeHitboxA.position, knifeHitboxB.position, playerMask))
+            // Lunge
+            if (facingRight)
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + knifeLungeForce.x,
+                    GetComponent<Rigidbody2D>().velocity.y + knifeLungeForce.y);
+            else
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - knifeLungeForce.x,
+                        GetComponent<Rigidbody2D>().velocity.y + knifeLungeForce.y);
+
+            if (Physics2D.OverlapArea(knifeHitboxA.position, knifeHitboxB.position, playerMask))
             {
                 Collider2D hit = Physics2D.OverlapAreaAll(knifeHitboxA.position, knifeHitboxB.position, playerMask)[0];
                 if (hit.gameObject.tag == "Player")
@@ -526,7 +556,35 @@ public class PlayerController : MonoBehaviour
                     HealthScript h = hit.gameObject.GetComponent<HealthScript>();
                     h.TakeDamage(20);
                 }
+            }
+            // check if any bullets should be reflected (bullet is close enough AND approaching the player AND the player is facing the bullet)
+            var bullets = GameObject.FindGameObjectsWithTag("Bullet");
+            foreach (var b in bullets) // loop through all bullets
+            {
+                if (Vector2.Distance(transform.position, b.transform.position) < swordReflectRadius) // check if within sword radius
+                {
+                    BulletController bc = b.gameObject.GetComponent<BulletController>();
+                    if ((bc.GetVelocity().x > 0 && b.transform.position.x < transform.position.x) ||
+                        (bc.GetVelocity().x < 0 && b.transform.position.x > transform.position.x)) // check if bullet is approaching player (X value only)
+                    {
+                        if ((facingRight && transform.position.x < b.transform.position.x) ||
+                            (!facingRight && transform.position.x > b.transform.position.x)) // check if player is facing correct X direction
+                        {
+                            // Change bullet velocity to move toward enemy player
+                            Vector2 thisPLayerLoc = transform.position;
+                            Vector2 playerLocA = GameObject.FindGameObjectsWithTag("Player")[0].transform.position;
+                            Vector2 playerLocB = GameObject.FindGameObjectsWithTag("Player")[1].transform.position;
+                            Vector2 targetAimLoc = new Vector2(0, 0);
+            
+                            if(thisPLayerLoc == playerLocA) targetAimLoc = playerLocB;
+                            else targetAimLoc = playerLocA;
 
+                            float speedOfBullet = bc.GetVelocity().magnitude;
+                            Vector2 newVelocity = (targetAimLoc - new Vector2(b.transform.position.x, b.transform.position.y)).normalized * speedOfBullet;
+                            bc.SetVelocity(newVelocity);
+                        }
+                    }
+                }
             }
         }
         else if (weapon == 2) // Spear
@@ -538,6 +596,9 @@ public class PlayerController : MonoBehaviour
                 {
                     HealthScript h = hit.gameObject.GetComponent<HealthScript>();
                     h.TakeDamage(20);
+                    PlayerController p = hit.gameObject.GetComponent<PlayerController>();
+                    bool b = hit.gameObject.transform.position.x > transform.position.x;
+                    p.KnockedBack(b);
                 }
 
             }
@@ -555,6 +616,18 @@ public class PlayerController : MonoBehaviour
 
             }
         }
+    }
+
+    // Hit by enemy Spear
+    public void KnockedBack(bool toTheRight)
+    {
+        disabledTimeRemaining = disabledTimeDuration;
+        currentSpeed = 0;
+
+        if(toTheRight) // Knockback
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + spearKnockbackForce.x, GetComponent<Rigidbody2D>().velocity.y + spearKnockbackForce.y);
+        else
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - spearKnockbackForce.x, GetComponent<Rigidbody2D>().velocity.y + spearKnockbackForce.y);
     }
 
     // Called when the Player walks over an Item Pickup
