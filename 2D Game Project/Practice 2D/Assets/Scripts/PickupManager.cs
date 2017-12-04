@@ -62,12 +62,12 @@ public class PickupManager : MonoBehaviour
 	// Choose spawn location using MinSpawnDistance
 	Vector2 ChooseSpawnLocation()
 	{
-		Vector2 TestLoc = new Vector2 (Random.Range(-6f, 6f), Random.Range(-1, 2));
+		Vector2 TestLoc = new Vector2 (Random.Range(-6f, 6f), Random.Range(-1f, 4f));
 		int attempts = 0;
 
 		// Try to move the location up to 10 times to find sufficient open space
 		while (!IsThisLocationAcceptable(TestLoc) && attempts < 10) {
-            TestLoc = new Vector2 (Random.Range(-6f, 6f), Random.Range(-1, 2));
+            TestLoc = new Vector2 (Random.Range(-6f, 6f), Random.Range(-1f, 4f));
 			attempts++;
 		}
 
