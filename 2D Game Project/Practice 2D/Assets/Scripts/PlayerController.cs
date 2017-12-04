@@ -12,10 +12,11 @@ public class PlayerController : MonoBehaviour
     public float walkAccelerationGround = 0.6f;
     public float walkAccelerationAir = 0.3f;
     public float stopFrictionGround = 0.6f;
-    public float stopFrictionAir = 0;
+    public float stopFrictionAir = 0f;
 
     private float currentSpeed = 0;
     private float speedMult = 1;
+    private float[] previousX = new float[5];
 
     //Jump variables
     public float jumpForce = 6;
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
         CheckIfPlayerFell();
 
         UpdateDebugText();
+        debugText2.text = "" + currentSpeed + ", " + isGrounded;
     }
 
     // Update variables used for timers of powerups & weapons
@@ -257,8 +259,33 @@ public class PlayerController : MonoBehaviour
         else if (currentSpeed < -baseWalkSpeed)
             currentSpeed = -baseWalkSpeed;
 
-        // apply X velocity using speed multiplier
-        GetComponent<Rigidbody2D>().velocity = new Vector2(currentSpeed * speedMult, GetComponent<Rigidbody2D>().velocity.y);
+        // check if player rigidbody hit a wall while in air and should fall to the ground (was bug)
+        CheckIfStuckFloating();
+
+        // apply X velocity
+        if ((weapon == 3 || weapon == 6) && AgilityTimeRemaining < 0) // chainsaw and minigun slow
+            GetComponent<Rigidbody2D>().velocity = new Vector2(currentSpeed * 0.5f, GetComponent<Rigidbody2D>().velocity.y);
+        else // no slow
+            GetComponent<Rigidbody2D>().velocity = new Vector2(currentSpeed * speedMult, GetComponent<Rigidbody2D>().velocity.y);
+    }
+
+    // Updates array with X location of player
+    // Stores previous 5 locations
+    // Used to detect if player is stuck on a wall (this function is a bugfix)
+    void CheckIfStuckFloating()
+    {
+        previousX[4] = previousX[3];
+        previousX[3] = previousX[2];
+        previousX[2] = previousX[1];
+        previousX[1] = previousX[0];
+        previousX[0] = transform.position.x;
+
+        float difference = Mathf.Abs(previousX[4] - previousX[0]);
+
+        // if X hasn't changed in 4 updates AND not grounded AND speed variable is not zero
+        // set speed to zero in order to fall
+        if (difference < 0.1 && !isGrounded && Mathf.Abs(currentSpeed) > 3)
+            currentSpeed = 0;
     }
 
     // Get input and update jumping
