@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     private float bulletSpeedMult = 1;
     private float bulletSpawnDist = 0.5f;
 
-    private Vector2 knifeLungeForce = new Vector2(3, 2);
+    private Vector2 lungeForce = new Vector2(3, 2);
     private Vector2 spearKnockbackForce = new Vector2(5, 3);
     private float swordReflectRadius = 1.5f;
 
@@ -277,8 +277,8 @@ public class PlayerController : MonoBehaviour
         // check if player rigidbody hit a wall while in air and should fall to the ground (was bug)
         CheckIfStuckFloating();
 
-        // Return (don't apply X force) if knife lunging OR movement disabled by spear knockback
-        if ((weapon == 0 && TimeSinceLastAttack < FireRateKnife) || disabledTimeRemaining > 0) return;
+        // Return (don't apply X force) if lunging OR movement disabled by spear knockback
+        if ((weapon == 0 && TimeSinceLastAttack < FireRateKnife) || (weapon == 2 && TimeSinceLastAttack < FireRateSpear / 2) || disabledTimeRemaining > 0) return;
 
         // apply X velocity
         if ((weapon == 3 || weapon == 6) && AgilityTimeRemaining < 0) // chainsaw and minigun slow
@@ -529,11 +529,11 @@ public class PlayerController : MonoBehaviour
         {
             // Lunge
             if (facingRight)
-                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + knifeLungeForce.x,
-                    GetComponent<Rigidbody2D>().velocity.y + knifeLungeForce.y);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + lungeForce.x,
+                    GetComponent<Rigidbody2D>().velocity.y + lungeForce.y);
             else
-                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - knifeLungeForce.x,
-                        GetComponent<Rigidbody2D>().velocity.y + knifeLungeForce.y);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - lungeForce.x,
+                        GetComponent<Rigidbody2D>().velocity.y + lungeForce.y);
 
             if (Physics2D.OverlapArea(knifeHitboxA.position, knifeHitboxB.position, playerMask))
             {
@@ -589,6 +589,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (weapon == 2) // Spear
         {
+            // Lunge
+            if (facingRight)
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x + lungeForce.x,
+                    GetComponent<Rigidbody2D>().velocity.y + lungeForce.y);
+            else
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x - lungeForce.x,
+                        GetComponent<Rigidbody2D>().velocity.y + lungeForce.y);
+
             if (Physics2D.OverlapArea(spearHitboxA.position, spearHitboxB.position, playerMask))
             {
                 Collider2D hit = Physics2D.OverlapAreaAll(spearHitboxA.position, spearHitboxB.position, playerMask)[0];
@@ -596,11 +604,12 @@ public class PlayerController : MonoBehaviour
                 {
                     HealthScript h = hit.gameObject.GetComponent<HealthScript>();
                     h.TakeDamage(20);
+
+                    // Knockback
                     PlayerController p = hit.gameObject.GetComponent<PlayerController>();
                     bool b = hit.gameObject.transform.position.x > transform.position.x;
                     p.KnockedBack(b);
                 }
-
             }
         }
         else if (weapon == 3) // Chainsaw
