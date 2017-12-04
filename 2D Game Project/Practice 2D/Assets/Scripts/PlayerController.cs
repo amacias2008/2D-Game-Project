@@ -104,14 +104,16 @@ public class PlayerController : MonoBehaviour
     //Other
     public Text debugText;
     public Text debugText2;
-    private Vector2 spawnLoc;
-    private Animator anim;
+    Vector2 spawnLoc;
+    Animator anim;
+    RoundManager rm;
 
     // Use this for initialization
     void Start()
     {
 		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
+        rm = GameObject.FindGameObjectsWithTag("RoundManager")[0].GetComponent<RoundManager>();
 
         previousWeapon = weapon;
 
@@ -121,16 +123,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Only run this Update function if the fight is active
+        if (!rm.IsFightActive()) return;
+
         UpdateTimeVariables();
         UpdatePowerupEffects();
         UpdateMovement();
         UpdateAiming();
         UpdateAttack();
 
-        CheckIfPlayerFell();
-
         UpdateDebugText();
-        //debugText2.text = "" + currentSpeed + ", " + isGrounded;
     }
 
     // Update variables used for timers of powerups & weapons
@@ -791,15 +793,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Reset player location if fell off map
-    void CheckIfPlayerFell()
+    //
+    public int GetPlayerNumber()
     {
-        if (transform.position.y < -20)
-        {
-            transform.position = spawnLoc;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            healthScript.Heal(100);
-        }
+        return playerNumber;
+    }
+
+    //
+    public float GetHealth()
+    {
+        return healthScript.GetHealth();
+    }
+
+    //
+    public float GetY()
+    {
+        return transform.position.y;
+    }
+
+    // Equip knife, fill health, clear all powerup effects, and move to spawn
+    public void NewRound()
+    {
+        previousWeapon = weapon = 0;
+        TimeSinceLastAttack = 10;
+        healthScript.Heal(1000);
+
+        FuryTimeRemaining = 0;
+        AgilityTimeRemaining = 0;
+        InvulnerabilityTimeRemaining = 0;
+        RegenerationTimeRemaining = 0;
+
+        transform.position = spawnLoc;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        currentSpeed = 0;
+    }
+
+    //
+    public void IdleAnim()
+    {
+        anim.SetBool("Moving", false);
     }
 
     // Update Text fields with debug info
