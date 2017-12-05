@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : NetworkBehaviour {
 
     public bool dynamicCamEnabled = true;
 
@@ -20,6 +21,9 @@ public class CameraController : MonoBehaviour {
 	void Update () {
 
         if (!dynamicCamEnabled) return;
+
+		if (!isLocalPlayer)
+			return;
 
         float x, y;
         x = (GameObject.FindGameObjectsWithTag("Player")[0].transform.position.x + GameObject.FindGameObjectsWithTag("Player")[1].transform.position.x) / 2f;

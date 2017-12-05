@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class RoundManager : MonoBehaviour {
+public class RoundManager : NetworkBehaviour {
 
-    public Text mainText;
-    public Text clockText;
+    string mainText;
+    string clockText;
 
     // Round
     private bool fightActive = false;
@@ -54,19 +55,36 @@ public class RoundManager : MonoBehaviour {
         // Display text for countdown timer
         if (secondsOnCountdown > 0)
         {
-            mainText.text = "" + secondsOnCountdown;
-            clockText.text = "";
+			//mainText.text = "" + secondsOnCountdown;
+			//clockText.text = "";
+			string mainText;
+			mainText = "" + secondsOnCountdown;
+			Debug.Log (mainText);
+			PlayerCanvas.canvas.WriteBigText (mainText);
+			string clockText;
+			clockText = "";
+			PlayerCanvas.canvas.WriteRoundText (clockText);
+
         }
         else if (secondsOnCountdown == 0)
         {
-            mainText.text = "FIGHT!";
-            clockText.text = "" + (int)roundTime;
+            //mainText.text = "FIGHT!";
+            //clockText.text = "" + (int)roundTime;
+			mainText = "FIGHT!";
+			PlayerCanvas.canvas.WriteBigText (mainText);
+			clockText = "" + (int)roundTime;
+			PlayerCanvas.canvas.WriteRoundText (clockText);
+
             fightActive = true;
         }
         else
         {
-            mainText.text = "";
-            clockText.text = "" + (int)roundTime;
+            //mainText.text = "";
+            //clockText.text = "" + (int)roundTime;
+
+			PlayerCanvas.canvas.WriteBigText ("");
+			clockText = "" + (int)roundTime;
+			PlayerCanvas.canvas.WriteRoundText (clockText);
         }
 
 
@@ -149,11 +167,16 @@ public class RoundManager : MonoBehaviour {
         if (p1won) p1wins++;
         if (p2won) p2wins++;
 
-        if (p1won && !p2won) mainText.text = "PLAYER 1 WON!\n";
-        if (!p1won && p2won) mainText.text = "PLAYER 2 WON!\n";
-        if (p1won && p2won) mainText.text = "IT'S A DRAW!\n";
+		if (p1won && !p2won) PlayerCanvas.canvas.WriteBigText("PLAYER 1 WON!\n");
+		if (!p1won && p2won) PlayerCanvas.canvas.WriteBigText("PLAYER 2 WON!\n");
+		if (p1won && p2won) PlayerCanvas.canvas.WriteBigText("IT'S A DRAW!\n");
 
-        if (p1won || p2won) mainText.text += "Score:  " + p1wins + " - " + p2wins;
+		if (p1won || p2won) {
+			mainText = "";
+			mainText += PlayerCanvas.canvas.bigText + "Score: " + p1wins + " - " + p2wins;
+			PlayerCanvas.canvas.WriteBigText (mainText);
+			//mainText.text += "Score:  " + p1wins + " - " + p2wins;
+		}
     }
 
     // Reset round

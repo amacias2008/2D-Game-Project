@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PickupManager : MonoBehaviour
+public class PickupManager : NetworkBehaviour
 {
     public float ItemSpawnRate = 2; // item spawn chance each update
     public int MaxItemCount = 5; // items stop spawning when count reaches this
@@ -33,7 +34,7 @@ public class PickupManager : MonoBehaviour
         float random = Random.Range(0f, 100f);
 
         // Check if an item should be spawned
-        if (random < ItemSpawnRate && GetNumberOfItems() < MaxItemCount) SpawnItem();
+        if (random < ItemSpawnRate && GetNumberOfItems() < MaxItemCount) CmdSpawnItem();
     }
 
     // Returns number of Pickups in scene
@@ -43,7 +44,8 @@ public class PickupManager : MonoBehaviour
     }
 
     // Adds a Pickup to the game field
-    void SpawnItem()
+	[Command]
+    void CmdSpawnItem()
     {
         int randomType = Random.Range(1, 10);
 
@@ -55,6 +57,7 @@ public class PickupManager : MonoBehaviour
         Pickup p = go.GetComponent<Pickup>();
         go.transform.position = loc;
 
+		NetworkServer.Spawn (go);
 		// TODO: Use item spawn frequencies
 		p.SetTypeID(randomType);
     }

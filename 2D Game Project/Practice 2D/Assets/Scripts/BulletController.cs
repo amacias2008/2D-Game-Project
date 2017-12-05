@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BulletController : MonoBehaviour {
+public class BulletController : NetworkBehaviour {
 
     public float bulletDamage = 10;
     public float lifespan = 10;
@@ -46,6 +47,7 @@ public class BulletController : MonoBehaviour {
     }
 
     // Collisions
+	[ClientCallback]
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Player" && activationDelay < 0)

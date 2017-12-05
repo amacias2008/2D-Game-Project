@@ -2,8 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     public int playerNumber = 1;
 
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     //Health
     HealthScript healthScript;
+	public GameObject bulletPrefab;
 
     //Weapon variables
     private int weapon = 0;
@@ -113,7 +115,7 @@ public class PlayerController : MonoBehaviour
     {
 		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
-        rm = GameObject.FindGameObjectsWithTag("RoundManager")[0].GetComponent<RoundManager>();
+        //rm = GameObject.FindGameObjectsWithTag("RoundManager")[0].GetComponent<RoundManager>();
 
         previousWeapon = weapon;
 
@@ -124,15 +126,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Only run this Update function if the fight is active
-        if (!rm.IsFightActive()) return;
+        //if (!rm.IsFightActive()) return;
 
+		if (!isLocalPlayer)
+			return;
+		
         UpdateTimeVariables();
         UpdatePowerupEffects();
         UpdateMovement();
-        UpdateAiming();
+        CmdUpdateAiming();
         UpdateAttack();
 
-        UpdateDebugText();
+        //UpdateDebugText();
     }
 
     // Update variables used for timers of powerups & weapons
@@ -151,8 +156,8 @@ public class PlayerController : MonoBehaviour
         TimeSinceLastAttack += delta;
 
         // If Chainsaw/Minigun is equipped and duration is expired, equip previous weapon
-        if (weapon == 3 && ChainsawTimeRemaining < 0) EquipPreviousWeapon();
-        if (weapon == 6 && MinigunTimeRemaining < 0) EquipPreviousWeapon();
+        if (weapon == 3 && ChainsawTimeRemaining < 0) RpcEquipPreviousWeapon();
+        if (weapon == 6 && MinigunTimeRemaining < 0) RpcEquipPreviousWeapon();
     }
 
     // Update variables affected by powerup effects
@@ -349,7 +354,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update aiming
-    void UpdateAiming()
+    void CmdUpdateAiming()
     {
         Flip();
 
@@ -458,39 +463,53 @@ public class PlayerController : MonoBehaviour
     {
         switch (weapon)
         {
-            case 0:
-                if (TimeSinceLastAttack * fireRateMult > FireRateKnife)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Melee");
+		case 0:
+			if (TimeSinceLastAttack * fireRateMult > FireRateKnife) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Melee");
+			}
                 break;
-            case 1:
-                if (TimeSinceLastAttack * fireRateMult > FireRateSword)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Melee");
+		case 1:
+			if (TimeSinceLastAttack * fireRateMult > FireRateSword) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Melee");
+			}
                 break;
-            case 2:
-                if (TimeSinceLastAttack * fireRateMult > FireRateSpear)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Melee");
+		case 2:
+			if (TimeSinceLastAttack * fireRateMult > FireRateSpear) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Melee");
+			}
                 break;
-            case 3:
-                if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw)
-                    Attack();
+		case 3:
+			if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
                 break;
-            case 4:
-                if (TimeSinceLastAttack * fireRateMult > FireRatePistol)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Shooting1");
+		case 4:
+			if (TimeSinceLastAttack * fireRateMult > FireRatePistol) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Shooting1");
+			}
                 break;
-            case 5:
-                if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Shooting1");
+		case 5:
+			if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Shooting1");
+			}
                 break;
-            case 6:
-                if (TimeSinceLastAttack * fireRateMult > FireRateMinigun)
-                    Attack();
-					GetComponent<Animator> ().SetTrigger ("Shooting1");
+		case 6:
+			if (TimeSinceLastAttack * fireRateMult > FireRateMinigun) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+				GetComponent<Animator> ().SetTrigger ("Shooting1");
+			}
                 break;
             default:
                 break;
@@ -498,26 +517,37 @@ public class PlayerController : MonoBehaviour
     }
 
     // Attack using the equipped weapon
-    void Attack()
+	[Command]
+    void CmdAttack()
     {
-        TimeSinceLastAttack = 0;
 
         // Fire bullet
         if (weapon > 3)
         {
 			
-            GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
+			/*GameObject go = (GameObject)Instantiate(Resources.Load("Bullet"));
             go.transform.position = transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist;
-
             BulletController bullet = go.GetComponent<BulletController>();
-            bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);
+            bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);*/
+
+			var networkBullet = (GameObject)Instantiate 
+				(bulletPrefab, transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist, transform.rotation);
+			//networkBullet.transform.position = transform.position + new Vector3 (aimVector.x, aimVector.y, 0) * bulletSpawnDist;
+
+			BulletController bullet = networkBullet.GetComponent<BulletController>();
+			bullet.SetVelocity (aimVector * bulletSpeedBase * bulletSpeedMult);
+
+			networkBullet.GetComponent<Rigidbody2D> ().velocity = bullet.vel;
+
+
+			NetworkServer.Spawn(networkBullet);
 
             // Plasma Rifle
             if (weapon == 5)
             {
                 bullet.SetRicochet(true);
                 PlasmaRifleAmmoRemaining--;
-                if (PlasmaRifleAmmoRemaining <= 0) EquipPreviousWeapon();
+                if (PlasmaRifleAmmoRemaining <= 0) RpcEquipPreviousWeapon();
             }
         }
         // Melee attack
@@ -647,31 +677,31 @@ public class PlayerController : MonoBehaviour
         switch (itemType)
         {
             case 1:
-                EquipSword();
+                RpcEquipSword();
                 break;
             case 2:
-                EquipSpear();
+                RpcEquipSpear();
                 break;
             case 3:
-                EquipChainsaw();
+                RpcEquipChainsaw();
                 break;
             case 4:
-                EquipPistol();
+                RpcEquipPistol();
                 break;
             case 5:
-                EquipPlasmaRifle();
+                RpcEquipPlasmaRifle();
                 break;
             case 6:
-                EquipMinigun();
+                RpcEquipMinigun();
                 break;
             case 7:
-                EquipFury();
+                RpcEquipFury();
                 break;
             case 8:
-                EquipAgility();
+                RpcEquipAgility();
                 break;
             case 9:
-                EquipVigor();
+                RpcEquipVigor();
                 break;
             default:
                 break;
@@ -682,111 +712,122 @@ public class PlayerController : MonoBehaviour
             TimeSinceLastAttack = 10;
     }
 
-    // Item 1 Collected
-    void EquipSword()
-    {
-        //Debug.Log("Player equipped Sword");
-        weapon = 1;
-    }
+	// Item 1 Collected
+	[ClientRpc]
+	void RpcEquipSword()
+	{
+		//Debug.Log("Player equipped Sword");
+		weapon = 1;
+	}
 
-    // Item 2 Collected
-    void EquipSpear()
-    {
-        //Debug.Log("Player equipped Spear");
-        weapon = 2;
-    }
+	// Item 2 Collected
+	[ClientRpc]
+	void RpcEquipSpear()
+	{
+		//Debug.Log("Player equipped Spear");
+		weapon = 2;
+	}
 
-    // Item 3 Collected
-    void EquipChainsaw()
-    {
-        //Debug.Log("Player equipped Chainsaw");
+	// Item 3 Collected
+	[ClientRpc]
+	void RpcEquipChainsaw()
+	{
+		//Debug.Log("Player equipped Chainsaw");
 
-        // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
-        if (!(weapon == 3 || weapon == 5 || weapon == 6))
-            previousWeapon = weapon;
-        weapon = 3;
+		// only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
+		if (!(weapon == 3 || weapon == 5 || weapon == 6))
+			previousWeapon = weapon;
+		weapon = 3;
 
-        ChainsawTimeRemaining = ChainsawDuration;
-    }
+		ChainsawTimeRemaining = ChainsawDuration;
+	}
 
-    // Item 4 Collected
-    void EquipPistol()
-    {
-        //Debug.Log("Player equipped Pistol");
-        weapon = 4;
-    }
+	// Item 4 Collected
+	[ClientRpc]
+	void RpcEquipPistol()
+	{
+		//Debug.Log("Player equipped Pistol");
+		weapon = 4;
+	}
 
-    // Item 5 Collected
-    void EquipPlasmaRifle()
-    {
-        //Debug.Log("Player equipped Plasma Rifle");
+	// Item 5 Collected
+	[ClientRpc]
+	void RpcEquipPlasmaRifle()
+	{
+		//Debug.Log("Player equipped Plasma Rifle");
 
-        // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
-        if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
-        weapon = 5;
+		// only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
+		if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
+		weapon = 5;
 
-        PlasmaRifleAmmoRemaining = PlasmaRifleAmmoMax;
-    }
+		PlasmaRifleAmmoRemaining = PlasmaRifleAmmoMax;
+	}
 
-    // Item 6 Collected
-    void EquipMinigun()
-    {
-        //Debug.Log("Player equipped Minigun");
+	// Item 6 Collected
+	[ClientRpc]
+	void RpcEquipMinigun()
+	{
+		//Debug.Log("Player equipped Minigun");
 
-        // only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
-        if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
-        weapon = 6;
+		// only update previousWeapon if player is not already holding Chainsaw, Rifle, or Minigun
+		if (!(weapon == 3 || weapon == 5 || weapon == 6)) previousWeapon = weapon;
+		weapon = 6;
 
-        MinigunTimeRemaining = MinigunDuration;
-    }
+		MinigunTimeRemaining = MinigunDuration;
+	}
 
-    // Item 7 Collected
-    void EquipFury()
-    {
-        //Debug.Log("Player equipped Fury");
-        FuryTimeRemaining = FuryDuration;
-    }
+	// Item 7 Collected
+	[ClientRpc]
+	void RpcEquipFury()
+	{
+		//Debug.Log("Player equipped Fury");
+		FuryTimeRemaining = FuryDuration;
+	}
 
-    // Item 8 Collected
-    void EquipAgility()
-    {
-        //Debug.Log("Player equipped Agility");
-        AgilityTimeRemaining = AgilityDuration;
-    }
+	// Item 8 Collected
+	[ClientRpc]
+	void RpcEquipAgility()
+	{
+		//Debug.Log("Player equipped Agility");
+		AgilityTimeRemaining = AgilityDuration;
+	}
 
-    // Item 9 Collected
-    void EquipVigor()
-    {
-        //Debug.Log("Player equipped Vigor");
-        InvulnerabilityTimeRemaining = InvulnerabilityDuration;
-        RegenerationTimeRemaining = RegenerationDuration;
-    }
+	// Item 9 Collected
+	[ClientRpc]
+	void RpcEquipVigor()
+	{
+		//Debug.Log("Player equipped Vigor");
+		InvulnerabilityTimeRemaining = InvulnerabilityDuration;
+		RegenerationTimeRemaining = RegenerationDuration;
+	}
 
     // Knives do not spawn as items.
     // Only needed for use in EquipPreviousWeapon()
-    void EquipKnife()
+	[ClientRpc]
+    void RpcEquipKnife()
     {
         //Debug.Log("Player equipped Knife");
         weapon = 0;
     }
 
     // After the player's Chainsaw, Rifle, or Minigun expires, equip the previous weapon
-    void EquipPreviousWeapon()
+	[ClientRpc]
+	void RpcEquipPreviousWeapon()
     {
         switch (previousWeapon)
         {
             // previousWeapon should not be Chainsaw, Rifle, or Minigun (3, 5, or 6)
             case 0:
-                EquipKnife();
+                RpcEquipKnife();
                 break;
             case 1:
-                EquipSword();
+                RpcEquipSword();
                 break;
             case 2:
-                EquipSpear();
+                RpcEquipSpear();
                 break;
             case 4:
-                EquipPistol();
+                RpcEquipPistol();
                 break;
             default:
                 break;

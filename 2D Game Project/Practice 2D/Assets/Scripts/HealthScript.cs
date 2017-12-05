@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class HealthScript : MonoBehaviour {
+public class HealthScript : NetworkBehaviour {
 
 	public float maxHealth = 100.0f;			//Maximum health
+	[SyncVar(hook = "OnHealthChanged")]
     private float health;                       //Health of player
-
-    public Image GreenHealthBar;				//Used as foreground color of health bar
-	public Image RedHealthBar;					//Used as background color of health bar
 
     PlayerController player;
 
@@ -43,19 +42,23 @@ public class HealthScript : MonoBehaviour {
 	 * after the damage has been after coming into contact
 	 * with the spike.
 	 **********************************************************/
-	void updateHealthBar(float health)
+	void OnHealthChanged(float health)
 	{
-		GreenHealthBar.fillAmount = health / maxHealth;
+		if (isLocalPlayer)
+			PlayerCanvas.canvas.SetHealth (health);
 	}
-
     /**********************************************************
 	 * TakeDamage:
 	 * 	@params val: amount to damage
 	 * This method lowers the player health by some value. 
 	 * It then updates the health bar UI.
 	 **********************************************************/
+	[Server]
     public void TakeDamage(float val)
     {
+		if (!isServer)
+			return;
+		
         if (player != null)
             if (player.IsInvulnerable())
                 return;
@@ -66,7 +69,7 @@ public class HealthScript : MonoBehaviour {
             health = maxHealth;
             //dead = true;
         }
-        updateHealthBar(health);
+        //updateHealthBar(health);
     }
 
     /**********************************************************
@@ -81,7 +84,7 @@ public class HealthScript : MonoBehaviour {
         if (health > maxHealth)
             health = maxHealth;
 
-        updateHealthBar (health);
+        //updateHealthBar (health);
     }
 
     /**********************************************************
