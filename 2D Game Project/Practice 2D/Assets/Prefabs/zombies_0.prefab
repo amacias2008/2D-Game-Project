@@ -191,10 +191,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  weapon: 0
-  debugText: {fileID: 114603663446420790, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
+  bulletPrefab: {fileID: 1665673033154856, guid: 436721ccdbbf97440adfe6b7922de503,
     type: 2}
-  debugText2: {fileID: 114673385058061948, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
+  weapon: 0
+  debugText: {fileID: 114559275765242424, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
+    type: 2}
+  debugText2: {fileID: 114644881414341386, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
     type: 2}
 --- !u!114 &114276903643732624
 MonoBehaviour:
@@ -208,10 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  GreenHealthBar: {fileID: 114433005957147488, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
-    type: 2}
-  RedHealthBar: {fileID: 114015990677581380, guid: 7e154c75f2df5e34baaab8d7f47a3bcb,
-    type: 2}
+  health: 0
 --- !u!114 &114468392458167518
 MonoBehaviour:
   m_ObjectHideFlags: 1

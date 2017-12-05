@@ -9,35 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1893259805895036}
+  m_RootGameObject: {fileID: 1174420928366714}
   m_IsPrefabParent: 1
---- !u!1 &1088234644687814
+--- !u!1 &1108512620558450
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 224379360725257256}
-  - component: {fileID: 222107120121661050}
-  - component: {fileID: 114603663446420790}
-  m_Layer: 5
-  m_Name: DebugText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1105970467762452
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 224954118229695372}
-  - component: {fileID: 222753581666085458}
-  - component: {fileID: 114673385058061948}
+  - component: {fileID: 224555257154473328}
+  - component: {fileID: 222909880384452192}
+  - component: {fileID: 114644881414341386}
   m_Layer: 5
   m_Name: DebugText2
   m_TagString: Untagged
@@ -45,54 +28,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1524394879339148
+--- !u!1 &1174420928366714
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 224144739601305430}
-  - component: {fileID: 222977665186107694}
-  - component: {fileID: 114433005957147488}
-  - component: {fileID: 114423600300587256}
-  m_Layer: 5
-  m_Name: HealthBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1670500698336214
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 224333029883948562}
-  - component: {fileID: 222317063070868108}
-  - component: {fileID: 114015990677581380}
-  m_Layer: 5
-  m_Name: RedHealthBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1893259805895036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 224253424956775618}
-  - component: {fileID: 223623566540600992}
-  - component: {fileID: 114507036218420386}
-  - component: {fileID: 114593267372394966}
-  - component: {fileID: 114715028586758848}
-  - component: {fileID: 114268592479388864}
+  - component: {fileID: 224242444132022056}
+  - component: {fileID: 223954979671633604}
+  - component: {fileID: 114462496569064720}
+  - component: {fileID: 114044853153083998}
+  - component: {fileID: 114623617031615494}
+  - component: {fileID: 114381448565170546}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -100,12 +48,80 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114015990677581380
+--- !u!1 &1522701279495808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224184214394304388}
+  - component: {fileID: 222344857767609450}
+  - component: {fileID: 114249392230031212}
+  m_Layer: 5
+  m_Name: RedHealthBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1696738019379332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224614392592257712}
+  - component: {fileID: 222740427933529330}
+  - component: {fileID: 114559275765242424}
+  m_Layer: 5
+  m_Name: DebugText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1770127907988378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224724678280392712}
+  - component: {fileID: 222497889953824442}
+  - component: {fileID: 114819156317746904}
+  - component: {fileID: 114434022262297852}
+  m_Layer: 5
+  m_Name: HealthBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114044853153083998
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1670500698336214}
+  m_GameObject: {fileID: 1174420928366714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &114249392230031212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1522701279495808}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -127,85 +143,40 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114268592479388864
+--- !u!114 &114381448565170546
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
+  m_GameObject: {fileID: 1174420928366714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: dd5d65ffd7972574db86683d2b77367e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 126
-    i1: 21
-    i2: 76
-    i3: 117
-    i4: 242
-    i5: 223
-    i6: 94
-    i7: 52
-    i8: 186
-    i9: 170
-    i10: 184
-    i11: 215
-    i12: 244
-    i13: 122
-    i14: 59
-    i15: 203
-  m_ServerOnly: 1
-  m_LocalPlayerAuthority: 0
---- !u!114 &114423600300587256
+  GreenHealthBar: {fileID: 114819156317746904}
+  RedHealthBar: {fileID: 114249392230031212}
+  debugText: {fileID: 114559275765242424}
+  debugText2: {fileID: 114644881414341386}
+--- !u!114 &114434022262297852
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1524394879339148}
+  m_GameObject: {fileID: 1770127907988378}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 646f5ca035dcb2c4abe453ecc950dcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  GreenHealthBar: {fileID: 114433005957147488}
-  RedHealthBar: {fileID: 114015990677581380}
---- !u!114 &114433005957147488
+  health: 0
+--- !u!114 &114462496569064720
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1524394879339148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.17241383, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: cae2dc6a49901a34780e06fe6ec8332d, type: 3}
-  m_Type: 3
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 0
-  m_FillAmount: 0.2
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!114 &114507036218420386
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
+  m_GameObject: {fileID: 1174420928366714}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -221,28 +192,12 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114593267372394966
+--- !u!114 &114559275765242424
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &114603663446420790
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1088234644687814}
+  m_GameObject: {fileID: 1696738019379332}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -269,13 +224,45 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Knife
---- !u!114 &114673385058061948
+  m_Text: Spear
+--- !u!114 &114623617031615494
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105970467762452}
+  m_GameObject: {fileID: 1174420928366714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 126
+    i1: 21
+    i2: 76
+    i3: 117
+    i4: 242
+    i5: 223
+    i6: 94
+    i7: 52
+    i8: 186
+    i9: 170
+    i10: 184
+    i11: 215
+    i12: 244
+    i13: 122
+    i14: 59
+    i15: 203
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114644881414341386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108512620558450}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -302,51 +289,347 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Attack: Ready \nAgility: 6.487543\n"
---- !u!114 &114715028586758848
+  m_Text: "Attack: Ready \nAgility: 6.333036\nFury: 9.983434\nFury: 9.966867\nFury:
+    9.9503\nFury: 9.933734\nFury: 9.917168\nFury: 9.90035\nFury: 9.884033\nFury: 9.867467\nFury:
+    9.8509\nFury: 9.833838\nFury: 9.817766\nFury: 9.800834\nFury: 9.784633\nFury:
+    9.768066\nFury: 9.751499\nFury: 9.734933\nFury: 9.718367\nFury: 9.7018\nFury:
+    9.685233\nChainsaw: 9.983434\nNext: Knife \nFury: 9.668667\nChainsaw: 9.966867\nNext:
+    Knife \nFury: 9.652101\nChainsaw: 9.950301\nNext: Knife \nFury: 9.635534\nChainsaw:
+    9.933734\nNext: Knife \nFury: 9.618967\nChainsaw: 9.917167\nNext: Knife \nFury:
+    9.6024\nChainsaw: 9.900584\nNext: Knife \nFury: 9.585817\nChainsaw: 9.884034\nNext:
+    Knife \nFury: 9.569267\nChainsaw: 9.867467\nNext: Knife \nFury: 9.5527\nChainsaw:
+    9.850901\nNext: Knife \nFury: 9.536134\nChainsaw: 9.834333\nNext: Knife \nFury:
+    9.519567\nChainsaw: 9.817763\nNext: Knife \nFury: 9.502996\nChainsaw: 9.8012\nNext:
+    Knife \nFury: 9.486433\nChainsaw: 9.779324\nNext: Knife \nFury: 9.464557\nChainsaw:
+    9.762555\nNext: Knife \nFury: 9.447788\nChainsaw: 9.746054\nNext: Knife \nFury:
+    9.431287\nChainsaw: 9.729552\nNext: Knife \nFury: 9.414785\nChainsaw: 9.713056\nNext:
+    Knife \nFury: 9.398289\nChainsaw: 9.696489\nNext: Knife \nFury: 9.381722\nChainsaw:
+    9.679923\nNext: Knife \nFury: 9.365156\nChainsaw: 9.663357\nNext: Knife \nFury:
+    9.34859\nChainsaw: 9.64679\nNext: Knife \nFury: 9.332023\nChainsaw: 9.630223\nNext:
+    Knife \nFury: 9.315456\nChainsaw: 9.613657\nNext: Knife \nFury: 9.29889\nChainsaw:
+    9.59709\nNext: Knife \nFury: 9.282323\nChainsaw: 9.580523\nNext: Knife \nFury:
+    9.265756\nChainsaw: 9.563956\nNext: Knife \nFury: 9.249189\nChainsaw: 9.546529\nNext:
+    Knife \nFury: 9.231762\nChainsaw: 9.530526\nNext: Knife \nFury: 9.215759\nChainsaw:
+    9.514256\nNext: Knife \nFury: 9.199489\nChainsaw: 9.497689\nNext: Knife \nFury:
+    9.182922\nChainsaw: 9.481017\nNext: Knife \nFury: 9.16625\nChainsaw: 9.464519\nNext:
+    Knife \nFury: 9.149752\nChainsaw: 9.447989\nNext: Knife \nFury: 9.133222\nChainsaw:
+    9.431423\nNext: Knife \nFury: 9.116656\nChainsaw: 9.414857\nNext: Knife \nFury:
+    9.10009\nChainsaw: 9.398011\nNext: Knife \nFury: 9.083244\nChainsaw: 9.381723\nNext:
+    Knife \nFury: 9.066957\nChainsaw: 9.365155\nNext: Knife \nFury: 9.050388\nChainsaw:
+    9.348506\nNext: Knife \nFury: 9.033739\nChainsaw: 9.332009\nNext: Knife \nFury:
+    9.017242\nChainsaw: 9.315457\nNext: Knife \nFury: 9.00069\nChainsaw: 9.29889\nNext:
+    Knife \nFury: 8.984123\nChainsaw: 9.282324\nNext: Knife \nFury: 8.967557\nChainsaw:
+    9.265758\nNext: Knife \nFury: 8.950991\nChainsaw: 9.24919\nNext: Knife \nFury:
+    8.934423\nChainsaw: 9.232479\nNext: Knife \nFury: 8.917712\nChainsaw: 9.216057\nNext:
+    Knife \nFury: 8.90129\nChainsaw: 9.199491\nNext: Knife \nFury: 8.884724\nChainsaw:
+    9.182924\nNext: Knife \nFury: 8.868157\nChainsaw: 9.166278\nNext: Knife \nFury:
+    8.851511\nChainsaw: 9.149791\nNext: Knife \nFury: 8.835024\nChainsaw: 9.133224\nNext:
+    Knife \nFury: 8.818458\nChainsaw: 9.116657\nNext: Knife \nFury: 8.80189\nChainsaw:
+    9.099984\nNext: Knife \nFury: 8.785217\nChainsaw: 9.083486\nNext: Knife \nFury:
+    8.768719\nChainsaw: 9.066957\nNext: Knife \nFury: 8.752191\nChainsaw: 9.05039\nNext:
+    Knife \nFury: 8.735623\nChainsaw: 9.033824\nNext: Knife \nFury: 8.719057\nChainsaw:
+    9.017258\nNext: Knife \nFury: 8.702491\nChainsaw: 9.000467\nNext: Knife \nFury:
+    8.6857\nChainsaw: 8.983975\nNext: Knife \nFury: 8.669209\nChainsaw: 8.967557\nNext:
+    Knife \nFury: 8.65279\nChainsaw: 8.950953\nNext: Knife \nFury: 8.636187\nChainsaw:
+    8.933968\nNext: Knife \nFury: 8.619201\nChainsaw: 8.917857\nNext: Knife \nFury:
+    8.60309\nAmmo: 20\nNext: Knife \nFury: 8.586524\nAmmo: 20\nNext: Knife \nFury:
+    8.569958\nAmmo: 20\nNext: Knife \nFury: 8.55339\nAmmo: 20\nNext: Knife \nFury:
+    8.536671\nAmmo: 20\nNext: Knife \nFury: 8.520257\nAmmo: 20\nNext: Knife \nFury:
+    8.503684\nAmmo: 20\nNext: Knife \nFury: 8.487124\nAmmo: 20\nNext: Knife \nFury:
+    8.47018\nAmmo: 20\nNext: Knife \nFury: 8.453991\nAmmo: 20\nNext: Knife \nFury:
+    8.437161\nAmmo: 20\nNext: Knife \nFury: 8.420857\nAmmo: 20\nNext: Knife \nFury:
+    8.40429\nAmmo: 20\nNext: Knife \nFury: 8.387723\nAmmo: 20\nNext: Knife \nFury:
+    8.371154\nAmmo: 20\nNext: Knife \nFury: 8.35459\nAmmo: 20\nNext: Knife \nFury:
+    8.338023\nAmmo: 20\nNext: Knife \nFury: 8.321457\nAmmo: 20\nNext: Knife \nFury:
+    8.304891\nAmmo: 20\nNext: Knife \nFury: 8.288143\nAmmo: 20\nNext: Knife \nFury:
+    8.271641\nAmmo: 20\nNext: Knife \nFury: 8.25519\nAmmo: 20\nNext: Knife \nFury:
+    8.238624\nAmmo: 20\nNext: Knife \nFury: 8.222057\nAmmo: 20\nNext: Knife \nFury:
+    8.20549\nAmmo: 20\nNext: Knife \nFury: 8.18863\nAmmo: 20\nNext: Knife \nFury:
+    8.172357\nAmmo: 20\nNext: Knife \nFury: 8.155625\nAmmo: 20\nNext: Knife \nFury:
+    8.139122\nAmmo: 20\nNext: Knife \nFury: 8.122656\nAmmo: 20\nNext: Knife \nFury:
+    8.10609\nAmmo: 20\nNext: Knife \nFury: 8.089523\nAmmo: 20\nNext: Knife \nFury:
+    8.072956\nAmmo: 20\nNext: Knife \nFury: 8.055631\nAmmo: 20\nNext: Knife \nFury:
+    8.039612\nAmmo: 20\nNext: Knife \nFury: 8.023108\nAmmo: 20\nNext: Knife \nFury:
+    8.006607\nAmmo: 20\nNext: Knife \nFury: 7.990118\nAmmo: 20\nNext: Knife \nFury:
+    7.973556\nAmmo: 20\nNext: Knife \nFury: 7.95699\nAmmo: 19\nNext: Knife \nFury:
+    7.940098\nAmmo: 19\nNext: Knife \nFury: 7.919995\nAmmo: 19\nNext: Knife \nFury:
+    7.902186\nAmmo: 19\nNext: Knife \nFury: 7.885581\nAmmo: 19\nNext: Knife \nFury:
+    7.86857\nAmmo: 19\nNext: Knife \nFury: 7.852087\nAmmo: 19\nNext: Knife \nFury:
+    7.835918\nAmmo: 19\nNext: Knife \nFury: 7.819351\nAmmo: 19\nNext: Knife \nFury:
+    7.802581\nAmmo: 19\nNext: Knife \nFury: 7.786218\nAmmo: 18\nNext: Knife \nFury:
+    7.769651\nAmmo: 18\nNext: Knife \nFury: 7.753075\nAmmo: 18\nNext: Knife \nFury:
+    7.736519\nAmmo: 18\nNext: Knife \nFury: 7.719952\nAmmo: 18\nNext: Knife \nFury:
+    7.703385\nAmmo: 18\nNext: Knife \nFury: 7.68656\nAmmo: 18\nNext: Knife \nFury:
+    7.669558\nAmmo: 18\nNext: Knife \nFury: 7.653248\nAmmo: 18\nNext: Knife \nFury:
+    7.635297\nAmmo: 17\nNext: Knife \nFury: 7.618729\nAmmo: 17\nNext: Knife \nFury:
+    7.602162\nAmmo: 17\nNext: Knife \nFury: 7.585557\nAmmo: 17\nNext: Knife \nFury:
+    7.569029\nAmmo: 17\nNext: Knife \nFury: 7.552462\nAmmo: 17\nNext: Knife \nFury:
+    7.535895\nAmmo: 17\nNext: Knife \nFury: 7.519329\nAmmo: 17\nNext: Knife \nFury:
+    7.502543\nAmmo: 17\nNext: Knife \nFury: 7.486042\nAmmo: 17\nNext: Knife \nFury:
+    7.469629\nAmmo: 17\nNext: Knife \nFury: 7.453037\nAmmo: 16\nNext: Knife \nFury:
+    7.436023\nAmmo: 16\nNext: Knife \nFury: 7.41993\nAmmo: 16\nNext: Knife \nFury:
+    7.403031\nAmmo: 16\nNext: Knife \nFury: 7.386029\nAmmo: 16\nNext: Knife \nFury:
+    7.37023\nAmmo: 16\nNext: Knife \nFury: 7.353663\nAmmo: 16\nNext: Knife \nFury:
+    7.336517\nAmmo: 16\nNext: Knife \nFury: 7.320523\nAmmo: 16\nNext: Knife \nFury:
+    7.303518\nAmmo: 16\nNext: Knife \nFury: 7.287396\nAmmo: 15\nNext: Knife \nFury:
+    7.266069\nAmmo: 15\nNext: Knife \nFury: 7.2495\nAmmo: 15\nNext: Knife \nFury:
+    7.232508\nAmmo: 15\nNext: Knife \nFury: 7.216367\nAmmo: 15\nNext: Knife \nFury:
+    7.1998\nAmmo: 15\nNext: Knife \nFury: 7.183233\nAmmo: 15\nNext: Knife \nFury:
+    7.166517\nAmmo: 15\nNext: Knife \nFury: 7.1501\nAmmo: 15\nNext: Knife \nFury:
+    7.133533\nAmmo: 15\nNext: Knife \nFury: 7.116966\nAmmo: 15\nNext: Knife \nFury:
+    7.100399\nAmmo: 15\nNext: Knife \nFury: 7.083833\nAmmo: 15\nNext: Knife \nFury:
+    7.067266\nAmmo: 15\nNext: Knife \nFury: 7.050498\nAmmo: 15\nNext: Knife \nFury:
+    7.033991\nAmmo: 15\nNext: Knife \nFury: 7.017498\nAmmo: 15\nNext: Knife \nFury:
+    7.000999\nAmmo: 15\nNext: Knife \nFury: 6.984406\nAmmo: 15\nNext: Knife \nFury:
+    6.967865\nAmmo: 15\nNext: Knife \nFury: 6.9513\nAmmo: 15\nNext: Knife \nFury:
+    6.934732\nAmmo: 15\nNext: Knife \nFury: 6.918166\nAmmo: 15\nNext: Knife \nFury:
+    6.901468\nAmmo: 15\nNext: Knife \nFury: 6.885032\nAmmo: 15\nNext: Knife \nFury:
+    6.868464\nAmmo: 15\nNext: Knife \nFury: 6.851899\nAmmo: 15\nNext: Knife \nFury:
+    6.834957\nAmmo: 14\nNext: Knife \nFury: 6.818766\nAmmo: 14\nNext: Knife \nFury:
+    6.802199\nAmmo: 14\nNext: Knife \nFury: 6.785451\nAmmo: 14\nNext: Knife \nFury:
+    6.769066\nAmmo: 14\nNext: Knife \nFury: 6.7525\nAmmo: 14\nNext: Knife \nFury:
+    6.735933\nAmmo: 14\nNext: Knife \nFury: 6.719366\nAmmo: 14\nNext: Knife \nFury:
+    6.7028\nAmmo: 14\nNext: Knife \nFury: 6.685939\nAmmo: 14\nNext: Knife \nFury:
+    6.669666\nAmmo: 13\nNext: Knife \nFury: 6.653099\nAmmo: 13\nNext: Knife \nFury:
+    6.636532\nAmmo: 13\nNext: Knife \nFury: 6.619966\nAmmo: 13\nNext: Knife \nFury:
+    6.603399\nAmmo: 13\nNext: Knife \nFury: 6.586832\nAmmo: 13\nNext: Knife \nFury:
+    6.570265\nAmmo: 13\nNext: Knife \nFury: 6.553421\nAmmo: 13\nNext: Knife \nFury:
+    6.536918\nAmmo: 13\nNext: Knife \nFury: 6.520416\nAmmo: 13\nNext: Knife \nFury:
+    6.503998\nAmmo: 12\nNext: Knife \nFury: 6.487427\nAmmo: 12\nNext: Knife \nFury:
+    6.470864\nAmmo: 12\nNext: Knife \nFury: 6.454298\nAmmo: 12\nNext: Knife \nFury:
+    6.437731\nAmmo: 12\nNext: Knife \nFury: 6.421164\nAmmo: 12\nNext: Knife \nFury:
+    6.404597\nAmmo: 12\nNext: Knife \nFury: 6.388031\nAmmo: 12\nNext: Knife \nFury:
+    6.3714\nAmmo: 12\nNext: Knife \nFury: 6.354396\nAmmo: 12\nNext: Knife \nFury:
+    6.337894\nAmmo: 11\nNext: Knife \nFury: 6.321763\nAmmo: 11\nNext: Knife \nFury:
+    6.305198\nAmmo: 11\nNext: Knife \nFury: 6.287886\nAmmo: 11\nNext: Knife \nFury:
+    6.272064\nAmmo: 11\nNext: Knife \nFury: 6.255497\nAmmo: 11\nNext: Knife \nFury:
+    6.238882\nAmmo: 11\nNext: Knife \nFury: 6.222364\nAmmo: 11\nNext: Knife \nFury:
+    6.205798\nAmmo: 11\nNext: Knife \nFury: 6.189231\nAmmo: 11\nNext: Knife \nFury:
+    6.172665\nAmmo: 10\nNext: Knife \nFury: 6.156098\nAmmo: 10\nNext: Knife \nFury:
+    6.139531\nAmmo: 10\nNext: Knife \nFury: 6.122965\nAmmo: 10\nNext: Knife \nFury:
+    6.106373\nAmmo: 10\nNext: Knife \nFury: 6.089367\nAmmo: 10\nNext: Knife \nFury:
+    6.072858\nAmmo: 10\nNext: Knife \nFury: 6.05636\nAmmo: 10\nNext: Knife \nFury:
+    6.039853\nAmmo: 10\nNext: Knife \nFury: 6.023564\nAmmo: 10\nNext: Knife \nFury:
+    6.00685\nAmmo: 9\nNext: Knife \nFury: 5.99043\nAmmo: 9\nNext: Knife \nFury: 5.973858\nAmmo:
+    9\nNext: Knife \nFury: 5.957297\nAmmo: 9\nNext: Knife \nFury: 5.94073\nAmmo: 9\nNext:
+    Knife \nFury: 5.924163\nAmmo: 9\nNext: Knife \nFury: 5.907597\nAmmo: 9\nNext:
+    Knife \nFury: 5.89103\nAmmo: 9\nNext: Knife \nFury: 5.874464\nAmmo: 9\nNext: Knife
+    \nFury: 5.849891\nAmmo: 9\nNext: Knife \nFury: 5.833323\nAmmo: 9\nNext: Knife
+    \nFury: 5.816756\nAmmo: 9\nNext: Knife \nFury: 5.800189\nAmmo: 9\nNext: Knife
+    \nFury: 5.783623\nAmmo: 9\nNext: Knife \nFury: 5.767056\nAmmo: 9\nNext: Knife
+    \nInvuln: 2.983433\nRegen: 9.983434\nFury: 5.750489\nAmmo: 9\nNext: Knife \nInvuln:
+    2.966867\nRegen: 9.966867\nFury: 5.733922\nAmmo: 9\nNext: Knife \nInvuln: 2.950257\nRegen:
+    9.950257\nFury: 5.717312\nAmmo: 9\nNext: Knife \nInvuln: 2.933735\nRegen: 9.933735\nFury:
+    5.70079\nAmmo: 9\nNext: Knife \nInvuln: 2.917167\nRegen: 9.917167\nFury: 5.684222\nAmmo:
+    9\nNext: Knife \nInvuln: 2.9006\nRegen: 9.9006\nFury: 5.667655\nAmmo: 9\nNext:
+    Knife \nInvuln: 2.883883\nRegen: 9.883883\nFury: 5.650939\nAmmo: 9\nNext: Knife
+    \nInvuln: 2.867467\nRegen: 9.867467\nFury: 5.634522\nAmmo: 9\nNext: Knife \nInvuln:
+    2.850744\nRegen: 9.850744\nFury: 5.617799\nAmmo: 9\nNext: Knife \nInvuln: 2.834243\nRegen:
+    9.834243\nFury: 5.601298\nAmmo: 9\nNext: Knife \nInvuln: 2.81774\nRegen: 9.817739\nFury:
+    5.584795\nAmmo: 9\nNext: Knife \nInvuln: 2.8012\nRegen: 9.8012\nFury: 5.568255\nAmmo:
+    9\nNext: Knife \nInvuln: 2.784634\nRegen: 9.784634\nFury: 5.551689\nAmmo: 9\nNext:
+    Knife \nInvuln: 2.767733\nRegen: 9.767734\nFury: 5.534789\nAmmo: 9\nNext: Knife
+    \nInvuln: 2.751231\nRegen: 9.751232\nFury: 5.518287\nAmmo: 9\nNext: Knife \nInvuln:
+    2.734742\nRegen: 9.734742\nFury: 5.501797\nAmmo: 9\nNext: Knife \nInvuln: 2.718229\nRegen:
+    9.718229\nFury: 5.485284\nAmmo: 9\nNext: Knife \nInvuln: 2.701702\nRegen: 9.701703\nFury:
+    5.468757\nAmmo: 9\nNext: Knife \nInvuln: 2.685223\nRegen: 9.685225\nFury: 5.452278\nAmmo:
+    9\nNext: Knife \nInvuln: 2.668667\nRegen: 9.668668\nFury: 5.435722\nAmmo: 9\nNext:
+    Knife \nInvuln: 2.65171\nRegen: 9.651711\nFury: 5.418765\nAmmo: 9\nNext: Knife
+    \nInvuln: 2.635534\nRegen: 9.635535\nFury: 5.402589\nAttack: Ready \nInvuln: 2.618967\nRegen:
+    9.618968\nFury: 5.386022\nAttack: Ready \nInvuln: 2.6024\nRegen: 9.602402\nFury:
+    5.369455\nAttack: Ready \nInvuln: 2.585834\nRegen: 9.585835\nFury: 5.352889\nAttack:
+    Ready \nInvuln: 2.569214\nRegen: 9.569216\nFury: 5.336269\nAttack: Ready \nInvuln:
+    2.5527\nRegen: 9.552702\nFury: 5.319755\nAttack: Ready \nInvuln: 2.536134\nRegen:
+    9.536136\nFury: 5.303188\nAttack: Ready \nInvuln: 2.519567\nRegen: 9.519569\nFury:
+    5.286622\nAttack: Ready \nInvuln: 2.5027\nRegen: 9.502703\nFury: 5.269754\nAttack:
+    Ready \nInvuln: 2.486434\nRegen: 9.486436\nFury: 5.253488\nAttack: Ready \nInvuln:
+    2.469867\nRegen: 9.46987\nFury: 5.236921\nAttack: Ready \nInvuln: 2.4533\nRegen:
+    9.453303\nFury: 5.220355\nAttack: Ready \nInvuln: 2.436691\nRegen: 9.436694\nFury:
+    5.203745\nAttack: Ready \nInvuln: 2.420167\nRegen: 9.42017\nFury: 5.187221\nAttack:
+    Ready \nInvuln: 2.4036\nRegen: 9.403604\nFury: 5.170654\nAttack: Ready \nInvuln:
+    2.386686\nRegen: 9.386688\nFury: 5.153739\nAttack: Ready \nInvuln: 2.370183\nRegen:
+    9.370186\nFury: 5.137237\nAttack: Ready \nInvuln: 2.353682\nRegen: 9.353685\nFury:
+    5.120737\nAttack: Ready \nInvuln: 2.337334\nRegen: 9.337337\nFury: 5.104388\nAttack:
+    Ready \nInvuln: 2.320676\nRegen: 9.320679\nFury: 5.08773\nAttack: Ready \nInvuln:
+    2.304189\nRegen: 9.304192\nFury: 5.071244\nAttack: Ready \nInvuln: 2.287633\nRegen:
+    9.287636\nFury: 5.054688\nAttack: Ready \nInvuln: 2.271066\nRegen: 9.271069\nFury:
+    5.038121\nAttack: Ready \nInvuln: 2.254168\nRegen: 9.254169\nFury: 5.021223\nAttack:
+    Ready \nInvuln: 2.237934\nRegen: 9.237936\nFury: 5.004989\nAttack: Ready \nInvuln:
+    2.221367\nRegen: 9.221369\nFury: 4.988422\nAttack: Ready \nInvuln: 2.2048\nRegen:
+    9.204803\nFury: 4.971856\nAttack: Ready \nInvuln: 2.188233\nRegen: 9.188234\nFury:
+    9.983432\nAttack: Ready \nInvuln: 2.171667\nRegen: 9.171669\nFury: 9.966866\nAttack:
+    Ready \nInvuln: 2.150683\nRegen: 9.150684\nFury: 9.945882\nAttack: Ready \nInvuln:
+    2.134114\nRegen: 9.134116\nFury: 9.929314\nAttack: Ready \nInvuln: 2.117548\nRegen:
+    9.11755\nFury: 9.912747\nAttack: Ready \nInvuln: 2.100981\nRegen: 9.100984\nFury:
+    9.896181\nAttack: Ready \nInvuln: 2.084414\nRegen: 9.084416\nFury: 9.879614\nAttack:
+    Ready \nInvuln: 2.067848\nRegen: 9.06785\nFury: 9.863048\nAttack: Ready \nInvuln:
+    2.051142\nRegen: 9.051145\nFury: 9.846342\nAttack: Ready \nInvuln: 2.034714\nRegen:
+    9.034717\nFury: 9.829914\nAttack: Ready \nInvuln: 2.018138\nRegen: 9.018141\nFury:
+    9.813338\nAttack: Ready \nInvuln: 2.001581\nRegen: 9.001583\nFury: 9.796781\nAttack:
+    Ready \nInvuln: 1.985014\nRegen: 8.985017\nFury: 9.780214\nAttack: Ready \nInvuln:
+    1.968132\nRegen: 8.968134\nFury: 9.763331\nAttack: Ready \nInvuln: 1.951881\nRegen:
+    8.951883\nFury: 9.747081\nAttack: Ready \nInvuln: 1.935314\nRegen: 8.935317\nFury:
+    9.730515\nAttack: Ready \nInvuln: 1.918748\nRegen: 8.918751\nFury: 9.713948\nAttack:
+    Ready \nInvuln: 1.902126\nRegen: 8.902128\nFury: 9.697326\nAttack: Ready \nInvuln:
+    1.885614\nRegen: 8.885617\nFury: 9.680815\nAttack: Ready \nInvuln: 1.869048\nRegen:
+    8.869051\nFury: 9.664248\nAttack: Ready \nInvuln: 1.852117\nRegen: 8.85212\nFury:
+    9.647318\nAttack: Ready \nInvuln: 1.835915\nRegen: 8.835918\nFury: 9.631115\nAttack:
+    Ready \nInvuln: 1.819348\nRegen: 8.819351\nFury: 9.614548\nAttack: Ready \nInvuln:
+    1.802781\nRegen: 8.802785\nFury: 9.597981\nAttack: Ready \nInvuln: 1.786111\nRegen:
+    8.786116\nFury: 9.581312\nAttack: Ready \nInvuln: 1.769648\nRegen: 8.769652\nFury:
+    9.564849\nAttack: Ready \nInvuln: 1.753081\nRegen: 8.753086\nFury: 9.548283\nAttack:
+    Ready \nInvuln: 1.736514\nRegen: 8.736519\nFury: 9.531715\nAttack: Ready \nInvuln:
+    1.719948\nRegen: 8.719953\nFury: 9.515149\nAttack: Ready \nInvuln: 1.70309\nRegen:
+    8.703094\nFury: 9.498291\nAttack: Ready \nInvuln: 1.686814\nRegen: 8.686818\nFury:
+    9.482015\nAttack: Ready \nInvuln: 1.670111\nRegen: 8.670115\nFury: 9.465311\nAttack:
+    Ready \nInvuln: 1.653594\nRegen: 8.653598\nFury: 9.448794\nAttack: Ready \nInvuln:
+    1.637104\nRegen: 8.637108\nFury: 9.432304\nAttack: Ready \nInvuln: 1.620548\nRegen:
+    8.620551\nFury: 9.415748\nAttack: Ready \nInvuln: 1.603981\nRegen: 8.603985\nFury:
+    9.399181\nAttack: Ready \nInvuln: 1.587086\nRegen: 8.58709\nFury: 9.382286\nAttack:
+    Ready \nInvuln: 1.570848\nRegen: 8.570852\nFury: 9.366049\nAttack: Ready \nInvuln:
+    1.554281\nRegen: 8.554285\nFury: 9.349482\nAttack: Ready \nInvuln: 1.537714\nRegen:
+    8.537719\nFury: 9.332915\nAttack: Ready \nInvuln: 1.521148\nRegen: 8.521152\nFury:
+    9.316349\nAmmo: Unlimited \nInvuln: 1.504581\nRegen: 8.504586\nFury: 9.299783\nAmmo:
+    Unlimited \nInvuln: 1.488014\nRegen: 8.488019\nFury: 9.283216\nAmmo: Unlimited
+    \nInvuln: 1.471448\nRegen: 8.471453\nFury: 9.266649\nAmmo: Unlimited \nInvuln:
+    1.454567\nRegen: 8.454572\nFury: 9.249768\nAmmo: Unlimited \nInvuln: 1.438315\nRegen:
+    8.438319\nFury: 9.233516\nAmmo: Unlimited \nInvuln: 1.421748\nRegen: 8.421753\nFury:
+    9.216949\nAmmo: Unlimited \nInvuln: 1.405181\nRegen: 8.405186\nFury: 9.200382\nAmmo:
+    Unlimited \nInvuln: 1.388615\nRegen: 8.388619\nFury: 9.183816\nAmmo: Unlimited
+    \nInvuln: 1.372048\nRegen: 8.372052\nFury: 9.167249\nAmmo: Unlimited \nInvuln:
+    1.355056\nRegen: 8.35506\nFury: 9.150256\nAmmo: Unlimited \nInvuln: 1.338914\nRegen:
+    8.338919\nFury: 9.134115\nAmmo: Unlimited \nInvuln: 1.317533\nRegen: 8.317537\nFury:
+    9.112734\nAmmo: Unlimited \nInvuln: 1.300965\nRegen: 8.300969\nFury: 9.096166\nAmmo:
+    Unlimited \nInvuln: 1.284397\nRegen: 8.284402\nFury: 9.079598\nAmmo: Unlimited
+    \nInvuln: 1.267831\nRegen: 8.267836\nFury: 9.063032\nAmmo: Unlimited \nInvuln:
+    1.251264\nRegen: 8.251269\nFury: 9.046466\nAmmo: Unlimited \nInvuln: 1.234698\nRegen:
+    8.234703\nFury: 9.0299\nAmmo: Unlimited \nInvuln: 1.218038\nRegen: 8.218043\nFury:
+    9.01324\nAmmo: Unlimited \nInvuln: 1.201537\nRegen: 8.201543\nFury: 8.996739\nAmmo:
+    Unlimited \nInvuln: 1.184998\nRegen: 8.185003\nFury: 8.9802\nAmmo: Unlimited \nInvuln:
+    1.168031\nRegen: 8.168036\nFury: 8.963233\nAmmo: Unlimited \nInvuln: 1.151864\nRegen:
+    8.15187\nFury: 8.947066\nAmmo: Unlimited \nInvuln: 1.13503\nRegen: 8.135036\nFury:
+    8.930232\nAmmo: Unlimited \nInvuln: 1.118497\nRegen: 8.118503\nFury: 8.913699\nAmmo:
+    Unlimited \nInvuln: 1.102022\nRegen: 8.102028\nFury: 8.897224\nAmmo: Unlimited
+    \nInvuln: 1.085539\nRegen: 8.085545\nFury: 8.880741\nAmmo: Unlimited \nInvuln:
+    1.069019\nRegen: 8.069025\nFury: 8.864222\nAmmo: Unlimited \nInvuln: 1.052464\nRegen:
+    8.05247\nFury: 8.847667\nAmmo: Unlimited \nInvuln: 1.035898\nRegen: 8.035904\nFury:
+    8.8311\nAmmo: Unlimited \nInvuln: 1.019331\nRegen: 8.019338\nFury: 8.814534\nAmmo:
+    Unlimited \nInvuln: 1.00251\nRegen: 8.002517\nFury: 8.797713\nAmmo: Unlimited
+    \nInvuln: 0.9861975\nRegen: 7.986204\nFury: 8.781401\nAmmo: Unlimited \nInvuln:
+    0.969501\nRegen: 7.969508\nFury: 8.764704\nAmmo: Unlimited \nInvuln: 0.9530051\nRegen:
+    7.953012\nFury: 8.748208\nAmmo: Unlimited \nInvuln: 0.9364978\nRegen: 7.936505\nFury:
+    8.731701\nAmmo: Unlimited \nInvuln: 0.9194976\nRegen: 7.919505\nFury: 8.714701\nAmmo:
+    Unlimited \nInvuln: 0.9033647\nRegen: 7.903372\nFury: 8.698567\nAmmo: Unlimited
+    \nInvuln: 0.886494\nRegen: 7.886501\nFury: 8.681697\nAmmo: Unlimited \nInvuln:
+    0.8702311\nRegen: 7.870238\nFury: 8.665434\nAmmo: Unlimited \nInvuln: 0.8534915\nRegen:
+    7.853499\nFury: 8.648694\nAmmo: Unlimited \nInvuln: 0.8369866\nRegen: 7.836994\nFury:
+    8.632189\nAmmo: Unlimited \nInvuln: 0.8204829\nRegen: 7.82049\nFury: 8.615685\nAmmo:
+    Unlimited \nInvuln: 0.8034965\nRegen: 7.803504\nFury: 8.5987\nAmmo: Unlimited
+    \nInvuln: 0.7873967\nRegen: 7.787404\nFury: 8.5826\nAmmo: Unlimited \nInvuln:
+    0.7704822\nRegen: 7.77049\nFury: 8.565685\nAmmo: Unlimited \nInvuln: 0.7539788\nRegen:
+    7.753986\nFury: 8.549182\nAmmo: Unlimited \nInvuln: 0.7376978\nRegen: 7.737705\nFury:
+    8.532901\nAmmo: Unlimited \nInvuln: 0.7209741\nRegen: 7.720982\nFury: 8.516177\nAmmo:
+    Unlimited \nInvuln: 0.7044727\nRegen: 7.70448\nFury: 8.499676\nAmmo: Unlimited
+    \nInvuln: 0.6879835\nRegen: 7.687991\nFury: 8.483187\nAmmo: Unlimited \nInvuln:
+    0.6714312\nRegen: 7.671439\nFury: 8.466635\nAmmo: Unlimited \nInvuln: 0.6548638\nRegen:
+    7.654871\nFury: 8.450068\nAmmo: Unlimited \nInvuln: 0.6374652\nRegen: 7.637473\nFury:
+    8.432669\nAmmo: Unlimited \nInvuln: 0.6214634\nRegen: 7.621471\nFury: 8.416667\nAmmo:
+    Unlimited \nInvuln: 0.6049584\nRegen: 7.604966\nFury: 8.400162\nAmmo: Unlimited
+    \nInvuln: 0.588598\nRegen: 7.588606\nFury: 8.383801\nAmmo: Unlimited \nInvuln:
+    0.572031\nRegen: 7.572039\nFury: 8.367234\nAmmo: Unlimited \nInvuln: 0.5554518\nRegen:
+    7.55546\nFury: 8.350655\nAmmo: Unlimited \nInvuln: 0.5388979\nRegen: 7.538906\nFury:
+    8.334101\nAmmo: Unlimited \nInvuln: 0.5223309\nRegen: 7.522339\nFury: 8.317533\nAmmo:
+    Unlimited \nInvuln: 0.4998519\nRegen: 7.49986\nFury: 8.295054\nAmmo: Unlimited
+    \nInvuln: 0.4832834\nRegen: 7.483292\nFury: 8.278486\nAmmo: Unlimited \nInvuln:
+    0.4667168\nRegen: 7.466725\nFury: 8.26192\nAmmo: Unlimited \nInvuln: 0.4499338\nRegen:
+    7.449942\nFury: 8.245137\nAmmo: Unlimited \nInvuln: 0.4334384\nRegen: 7.433446\nFury:
+    8.228642\nAmmo: Unlimited \nInvuln: 0.4170159\nRegen: 7.417024\nFury: 8.212219\nAmmo:
+    Unlimited \nInvuln: 0.4004351\nRegen: 7.400444\nFury: 8.195639\nAmmo: Unlimited
+    \nInvuln: 0.3838836\nRegen: 7.383892\nFury: 8.179087\nAmmo: Unlimited \nInvuln:
+    0.3673166\nRegen: 7.367325\nFury: 8.162519\nAmmo: Unlimited \nInvuln: 0.3507501\nRegen:
+    7.350759\nFury: 8.145953\nAmmo: Unlimited \nInvuln: 0.333924\nRegen: 7.333932\nFury:
+    8.129128\nAmmo: Unlimited \nInvuln: 0.3176169\nRegen: 7.317626\nFury: 8.112821\nAmmo:
+    Unlimited \nInvuln: 0.3009212\nRegen: 7.30093\nFury: 8.096125\nAmmo: Unlimited
+    \nInvuln: 0.284483\nRegen: 7.284492\nFury: 8.079686\nAmmo: Unlimited \nInvuln:
+    0.2679168\nRegen: 7.267926\nFury: 8.06312\nAmmo: Unlimited \nInvuln: 0.2513506\nRegen:
+    7.251359\nFury: 8.046554\nAmmo: Unlimited \nInvuln: 0.2344239\nRegen: 7.234433\nFury:
+    8.029627\nAmmo: Unlimited \nInvuln: 0.2182167\nRegen: 7.218225\nFury: 8.01342\nAmmo:
+    Unlimited \nInvuln: 0.2016501\nRegen: 7.201659\nFury: 7.996853\nAmmo: Unlimited
+    \nInvuln: 0.1850836\nRegen: 7.185092\nFury: 7.980287\nAmmo: Unlimited \nInvuln:
+    0.1679021\nRegen: 7.167911\nFury: 7.963105\nAmmo: Unlimited \nInvuln: 0.1519015\nRegen:
+    7.15191\nFury: 7.947104\nAmmo: Unlimited \nInvuln: 0.1353835\nRegen: 7.135392\nFury:
+    7.930586\nAmmo: Unlimited \nInvuln: 0.1188169\nRegen: 7.118825\nFury: 7.91402\nAmmo:
+    Unlimited \nInvuln: 0.101902\nRegen: 7.10191\nFury: 7.897105\nAmmo: Unlimited
+    \nInvuln: 0.08568338\nRegen: 7.085691\nFury: 7.880886\nAmmo: Unlimited \nInvuln:
+    0.06889052\nRegen: 7.068899\nFury: 7.864093\nAmmo: Unlimited \nInvuln: 0.05240491\nRegen:
+    7.052413\nFury: 7.847608\nAmmo: Unlimited \nInvuln: 0.03587231\nRegen: 7.035881\nFury:
+    7.831075\nAmmo: Unlimited \nInvuln: 0.01888554\nRegen: 7.018894\nFury: 7.814088\nAmmo:
+    Unlimited \nInvuln: 0.002850145\nRegen: 7.002858\nFury: 7.798053\nAmmo: Unlimited
+    \nRegen: 6.986291\nFury: 7.781486\nAmmo: Unlimited \nRegen: 6.969375\nFury: 7.764569\nAmmo:
+    Unlimited \nRegen: 6.952887\nFury: 7.748081\nAmmo: Unlimited \nRegen: 6.936382\nFury:
+    7.731576\nAmmo: Unlimited \nRegen: 6.919871\nFury: 7.715065\nAmmo: Unlimited \nRegen:
+    6.902877\nFury: 7.698072\nAmmo: Unlimited \nRegen: 6.886888\nFury: 7.682082\nAmmo:
+    Unlimited \nRegen: 6.870325\nFury: 7.665519\nAmmo: Unlimited \nRegen: 6.853758\nFury:
+    7.648953\nAmmo: Unlimited \nRegen: 6.837192\nFury: 7.632386\nAmmo: Unlimited \nRegen:
+    6.820625\nFury: 7.615819\nAmmo: Unlimited \nRegen: 6.804058\nFury: 7.599253\nAmmo:
+    Unlimited \nRegen: 6.787374\nFury: 7.582569\n"
+--- !u!114 &114819156317746904
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
+  m_GameObject: {fileID: 1770127907988378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646f5ca035dcb2c4abe453ecc950dcf3, type: 3}
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  GreenHealthBar: {fileID: 114433005957147488}
-  RedHealthBar: {fileID: 114015990677581380}
---- !u!222 &222107120121661050
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0.17241383, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: cae2dc6a49901a34780e06fe6ec8332d, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 0.83199954
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &222344857767609450
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1088234644687814}
---- !u!222 &222317063070868108
+  m_GameObject: {fileID: 1522701279495808}
+--- !u!222 &222497889953824442
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1670500698336214}
---- !u!222 &222753581666085458
+  m_GameObject: {fileID: 1770127907988378}
+--- !u!222 &222740427933529330
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105970467762452}
---- !u!222 &222977665186107694
+  m_GameObject: {fileID: 1696738019379332}
+--- !u!222 &222909880384452192
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1524394879339148}
---- !u!223 &223623566540600992
+  m_GameObject: {fileID: 1108512620558450}
+--- !u!223 &223954979671633604
 Canvas:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
+  m_GameObject: {fileID: 1174420928366714}
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
@@ -361,38 +644,38 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!224 &224144739601305430
+--- !u!224 &224184214394304388
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1524394879339148}
+  m_GameObject: {fileID: 1522701279495808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224253424956775618}
-  m_RootOrder: 1
+  m_Father: {fileID: 224242444132022056}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 47.62, y: 2.45}
-  m_SizeDelta: {x: 3.766, y: 0.472}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -2.3800025, y: 2.45}
+  m_SizeDelta: {x: 3.7655, y: 0.472}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224253424956775618
+--- !u!224 &224242444132022056
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1893259805895036}
+  m_GameObject: {fileID: 1174420928366714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224333029883948562}
-  - {fileID: 224144739601305430}
-  - {fileID: 224379360725257256}
-  - {fileID: 224954118229695372}
+  - {fileID: 224184214394304388}
+  - {fileID: 224724678280392712}
+  - {fileID: 224614392592257712}
+  - {fileID: 224555257154473328}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -401,35 +684,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224333029883948562
+--- !u!224 &224555257154473328
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1670500698336214}
+  m_GameObject: {fileID: 1108512620558450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.00414, y: 0.00414, z: 0.00414}
   m_Children: []
-  m_Father: {fileID: 224253424956775618}
-  m_RootOrder: 0
+  m_Father: {fileID: 224242444132022056}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.3800025, y: 2.45}
-  m_SizeDelta: {x: 3.7655, y: 0.472}
+  m_AnchoredPosition: {x: 4.17, y: 1.56}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224379360725257256
+--- !u!224 &224614392592257712
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1088234644687814}
+  m_GameObject: {fileID: 1696738019379332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0041372236, y: 0.0041372245, z: 0.0041372245}
   m_Children: []
-  m_Father: {fileID: 224253424956775618}
+  m_Father: {fileID: 224242444132022056}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -437,21 +720,21 @@ RectTransform:
   m_AnchoredPosition: {x: 4.16, y: 2.65}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224954118229695372
+--- !u!224 &224724678280392712
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105970467762452}
+  m_GameObject: {fileID: 1770127907988378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.00414, y: 0.00414, z: 0.00414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224253424956775618}
-  m_RootOrder: 3
+  m_Father: {fileID: 224242444132022056}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.17, y: 1.56}
-  m_SizeDelta: {x: 500, y: 500}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 47.62, y: 2.45}
+  m_SizeDelta: {x: 3.766, y: 0.472}
   m_Pivot: {x: 0.5, y: 0.5}

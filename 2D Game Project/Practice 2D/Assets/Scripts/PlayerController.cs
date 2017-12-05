@@ -32,6 +32,8 @@ public class PlayerController : NetworkBehaviour
 
     //Health
     HealthScript healthScript;
+	public GameObject bulletPrefab;
+
 
     //Weapon variables
     public int weapon = 0;
@@ -81,9 +83,8 @@ public class PlayerController : NetworkBehaviour
     private float RegenerationTimeRemaining = 0;
     private float TimeSinceLastAttack = 10;
    
-    public Text debugText;
-    public Text debugText2;
-
+	public Text debugText;
+	public Text debugText2;
 
     // Use this for initialization
     void Start()
@@ -103,9 +104,9 @@ public class PlayerController : NetworkBehaviour
         UpdatePowerupEffects();
         UpdateMovement();
         UpdateAiming();
-        CmdUpdateAttack();
+        UpdateAttack();
 
-        UpdateDebugText();
+        //UpdateDebugText();
     }
 
     // Update variables used for timers of powerups & weapons
@@ -123,8 +124,8 @@ public class PlayerController : NetworkBehaviour
         TimeSinceLastAttack += delta;
 
         // If Chainsaw/Minigun is equipped and duration is expired, equip previous weapon
-        if (weapon == 3 && ChainsawTimeRemaining < 0) EquipPreviousWeapon();
-        if (weapon == 6 && MinigunTimeRemaining < 0) EquipPreviousWeapon();
+        if (weapon == 3 && ChainsawTimeRemaining < 0) RpcEquipPreviousWeapon();
+        if (weapon == 6 && MinigunTimeRemaining < 0) RpcEquipPreviousWeapon();
     }
 
     // Update variables affected by powerup effects
@@ -373,51 +374,64 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Get player input for attacking
-	[Command]
-    void CmdUpdateAttack()
+    void UpdateAttack()
     {
         // While Fire key is held down, attempt to attack
-        if (Input.GetKey(KeyCode.Space))
-            CmdAttemptAttack();
+		if (Input.GetKey (KeyCode.Space)) {
+			AttemptAttack ();
+		}
 
         // If Chainsaw or Minigun is equipped, constantly attack
         else if (weapon == 3 || weapon == 6)
-            CmdAttemptAttack();
+            AttemptAttack();
     }
 
    // Check if equipped weapon is ready to be fired
-	[Command]
-    void CmdAttemptAttack()
+    void AttemptAttack()
     {
         switch (weapon)
         {
-            case 0:
-                if (TimeSinceLastAttack * fireRateMult > FireRateKnife)
-                    CmdAttack();
+		case 0:
+			if (TimeSinceLastAttack * fireRateMult > FireRateKnife) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
+				break;
+		case 1:
+			if (TimeSinceLastAttack * fireRateMult > FireRateSword) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
                 break;
-            case 1:
-                if (TimeSinceLastAttack * fireRateMult > FireRateSword)
-                    CmdAttack();
+		case 2:
+			if (TimeSinceLastAttack * fireRateMult > FireRateSpear) {
+				TimeSinceLastAttack = 0;    
+				CmdAttack ();
+			}
                 break;
-            case 2:
-                if (TimeSinceLastAttack * fireRateMult > FireRateSpear)
-                    CmdAttack();
+		case 3:
+			if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw) {
+				TimeSinceLastAttack = 0;    
+				CmdAttack ();
+			}
                 break;
-            case 3:
-                if (TimeSinceLastAttack * fireRateMult > FireRateChainsaw)
-                    CmdAttack();
+		case 4:
+			if (TimeSinceLastAttack * fireRateMult > FireRatePistol) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
                 break;
-            case 4:
-                if (TimeSinceLastAttack * fireRateMult > FireRatePistol)
-                    CmdAttack();
+		case 5:
+			if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
                 break;
-            case 5:
-                if (TimeSinceLastAttack * fireRateMult > FireRatePlasmaRifle)
-                    CmdAttack();
-                break;
-            case 6:
-                if (TimeSinceLastAttack * fireRateMult > FireRateMinigun)
-                    CmdAttack();
+		case 6:
+			if (TimeSinceLastAttack * fireRateMult > FireRateMinigun) {
+				TimeSinceLastAttack = 0;
+				CmdAttack ();
+			}
                 break;
             default:
                 break;
@@ -428,8 +442,8 @@ public class PlayerController : NetworkBehaviour
 	[Command]
     void CmdAttack()
     {
-        TimeSinceLastAttack = 0;
-
+		Debug.Log ("FIRE2");
+		//Debug.Log (TimeSinceLastAttack);
         // Fire bullet
         if (weapon > 3)
         {
@@ -439,14 +453,18 @@ public class PlayerController : NetworkBehaviour
             BulletController bullet = go.GetComponent<BulletController>();
             bullet.SetVelocity(aimVector * bulletSpeedBase * bulletSpeedMult);*/
 
-			var networkBullet = (GameObject)Instantiate (Resources.Load ("Bullet"));
-			networkBullet.transform.position = transform.position + new Vector3 (aimVector.x, aimVector.y, 0) * bulletSpawnDist;
+			var networkBullet = (GameObject)Instantiate 
+				(bulletPrefab, transform.position + new Vector3(aimVector.x, aimVector.y, 0) * bulletSpawnDist, transform.rotation);
+			//networkBullet.transform.position = transform.position + new Vector3 (aimVector.x, aimVector.y, 0) * bulletSpawnDist;
 
 			BulletController bullet = networkBullet.GetComponent<BulletController>();
 			bullet.SetVelocity (aimVector * bulletSpeedBase * bulletSpeedMult);
+
 			networkBullet.GetComponent<Rigidbody2D> ().velocity = bullet.vel;
 
-			NetworkServer.Spawn (networkBullet);
+
+			NetworkServer.Spawn(networkBullet);
+
             if (weapon == 5)
                 bullet.SetRicochet (true);
         }
@@ -456,7 +474,7 @@ public class PlayerController : NetworkBehaviour
         {
             PlasmaRifleAmmoRemaining--;
             if (PlasmaRifleAmmoRemaining <= 0)
-                EquipPreviousWeapon();
+                RpcEquipPreviousWeapon();
         }
     }
 
@@ -466,31 +484,31 @@ public class PlayerController : NetworkBehaviour
         switch (itemType)
         {
             case 1:
-                EquipSword();
+                RpcEquipSword();
                 break;
             case 2:
-                EquipSpear();
+                RpcEquipSpear();
                 break;
             case 3:
-                EquipChainsaw();
+                RpcEquipChainsaw();
                 break;
             case 4:
-                EquipPistol();
+                RpcEquipPistol();
                 break;
             case 5:
-                EquipPlasmaRifle();
+                RpcEquipPlasmaRifle();
                 break;
             case 6:
-                EquipMinigun();
+                RpcEquipMinigun();
                 break;
             case 7:
-                EquipFury();
+                RpcEquipFury();
                 break;
             case 8:
-                EquipAgility();
+                RpcEquipAgility();
                 break;
             case 9:
-                EquipVigor();
+                RpcEquipVigor();
                 break;
             default:
                 break;
@@ -502,21 +520,24 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Item 1 Collected
-    void EquipSword()
+	[ClientRpc]
+    void RpcEquipSword()
     {
         //Debug.Log("Player equipped Sword");
         weapon = 1;
     }
 
     // Item 2 Collected
-    void EquipSpear()
+	[ClientRpc]
+    void RpcEquipSpear()
     {
         //Debug.Log("Player equipped Spear");
         weapon = 2;
     }
 
     // Item 3 Collected
-    void EquipChainsaw()
+	[ClientRpc]
+    void RpcEquipChainsaw()
     {
         //Debug.Log("Player equipped Chainsaw");
 
@@ -529,14 +550,16 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Item 4 Collected
-    void EquipPistol()
+	[ClientRpc]
+    void RpcEquipPistol()
     {
         //Debug.Log("Player equipped Pistol");
         weapon = 4;
     }
 
     // Item 5 Collected
-    void EquipPlasmaRifle()
+	[ClientRpc]
+    void RpcEquipPlasmaRifle()
     {
         //Debug.Log("Player equipped Plasma Rifle");
 
@@ -548,7 +571,8 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Item 6 Collected
-    void EquipMinigun()
+	[ClientRpc]
+    void RpcEquipMinigun()
     {
         //Debug.Log("Player equipped Minigun");
 
@@ -560,21 +584,24 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Item 7 Collected
-    void EquipFury()
+	[ClientRpc]
+	void RpcEquipFury()
     {
         //Debug.Log("Player equipped Fury");
         FuryTimeRemaining = FuryDuration;
     }
 
     // Item 8 Collected
-    void EquipAgility()
+	[ClientRpc]
+    void RpcEquipAgility()
     {
         //Debug.Log("Player equipped Agility");
         AgilityTimeRemaining = AgilityDuration;
     }
 
     // Item 9 Collected
-    void EquipVigor()
+	[ClientRpc]
+    void RpcEquipVigor()
     {
         //Debug.Log("Player equipped Vigor");
         InvulnerabilityTimeRemaining = InvulnerabilityDuration;
@@ -583,29 +610,31 @@ public class PlayerController : NetworkBehaviour
 
     // Knives do not spawn as items.
     // Only needed for use in EquipPreviousWeapon()
-    void EquipKnife()
+	[ClientRpc]
+    void RpcEquipKnife()
     {
         //Debug.Log("Player equipped Knife");
         weapon = 0;
     }
 
     // After the player's Chainsaw, Rifle, or Minigun expires, equip the previous weapon
-    void EquipPreviousWeapon()
+	[ClientRpc]
+    void RpcEquipPreviousWeapon()
     {
         switch (previousWeapon)
         {
             // previousWeapon should not be Chainsaw, Rifle, or Minigun (3, 5, or 6)
             case 0:
-                EquipKnife();
+                RpcEquipKnife();
                 break;
             case 1:
-                EquipSword();
+                RpcEquipSword();
                 break;
             case 2:
-                EquipSpear();
+                RpcEquipSpear();
                 break;
             case 4:
-                EquipPistol();
+                RpcEquipPistol();
                 break;
             default:
                 break;
@@ -615,40 +644,40 @@ public class PlayerController : NetworkBehaviour
     // Update Text fields with debug info
     void UpdateDebugText()
     {
-        debugText.text = "";
+		PlayerCanvas.canvas.WriteDebugText("");
         switch (weapon)
         {
             case 0:
-                debugText.text += "Knife";
+				PlayerCanvas.canvas.WriteDebugText("Knife");
                 break;
             case 1:
-                debugText.text += "Sword";
+				PlayerCanvas.canvas.WriteDebugText("Sword");
                 break;
             case 2:
-                debugText.text += "Spear";
+				PlayerCanvas.canvas.WriteDebugText("Spear");
                 break;
             case 3:
-                debugText.text += "Chainsaw";
+				PlayerCanvas.canvas.WriteDebugText("Chainsaw");
                 break;
             case 4:
-                debugText.text += "Pistol";
+				PlayerCanvas.canvas.WriteDebugText("Pistol");
                 break;
             case 5:
-                debugText.text += "Plasma Rifle";
+				PlayerCanvas.canvas.WriteDebugText("Plasma Rifle");
                 break;
             case 6:
-                debugText.text += "Minigun";
+				PlayerCanvas.canvas.WriteDebugText("Minigun");
                 break;
             default:
                 break;
         }
 
-        debugText2.text = "";
+		PlayerCanvas.canvas.WriteDebugTextTwo("");
         if (weapon == 0)
         {
-            debugText2.text += "Attack: ";
-            if (TimeSinceLastAttack * fireRateMult > FireRateKnife) debugText2.text += "Ready \n";
-            else debugText2.text += (FireRateKnife - (TimeSinceLastAttack * fireRateMult)) + " \n";
+			PlayerCanvas.canvas.WriteDebugTextTwo("Attack: ");
+			if (TimeSinceLastAttack * fireRateMult > FireRateKnife) PlayerCanvas.canvas.WriteDebugTextTwo("Ready \n");
+			else PlayerCanvas.canvas.WriteDebugTextTwo( (FireRateKnife - (TimeSinceLastAttack * fireRateMult)) + " \n" );
         }
         else if (weapon == 1)
         {
