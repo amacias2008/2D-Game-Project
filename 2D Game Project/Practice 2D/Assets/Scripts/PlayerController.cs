@@ -115,18 +115,24 @@ public class PlayerController : NetworkBehaviour
     {
 		anim = GetComponent<Animator> ();
         healthScript = GetComponent<HealthScript>();
-        //rm = GameObject.FindGameObjectsWithTag("RoundManager")[0].GetComponent<RoundManager>();
+        rm = GameObject.FindGameObjectsWithTag("RoundManager")[0].GetComponent<RoundManager>();
 
         previousWeapon = weapon;
 
         spawnLoc = transform.position;
     }
 
+	public override void OnStartLocalPlayer ()
+	{
+		base.OnStartLocalPlayer ();
+		gameObject.name = "Local";
+	}
     // Update is called once per frame
     void Update()
     {
+		CmdStartOver ();
         // Only run this Update function if the fight is active
-        //if (!rm.IsFightActive()) return;
+		if (!rm.fightActive) return;
 
 		if (!isLocalPlayer)
 			return;
@@ -134,11 +140,30 @@ public class PlayerController : NetworkBehaviour
         UpdateTimeVariables();
         UpdatePowerupEffects();
         UpdateMovement();
-        CmdUpdateAiming();
+        UpdateAiming();
         UpdateAttack();
-
+		//StartOver ();
         //UpdateDebugText();
     }
+
+	[Command]
+	void CmdStartOver()
+	{
+		if (!rm.fightActive) 
+		{
+
+			if (Input.GetKeyDown (KeyCode.R)) 
+			{
+				Debug.Log ("hello");
+				rm.NewRound ();
+			} 
+
+			if (Input.GetKeyDown (KeyCode.Escape)) 
+			{
+				rm.FullReset ();
+			}
+		}
+	}
 
     // Update variables used for timers of powerups & weapons
     void UpdateTimeVariables()
@@ -354,7 +379,7 @@ public class PlayerController : NetworkBehaviour
     }
 
     // Update aiming
-    void CmdUpdateAiming()
+    void UpdateAiming()
     {
         Flip();
 
@@ -537,8 +562,7 @@ public class PlayerController : NetworkBehaviour
 			BulletController bullet = networkBullet.GetComponent<BulletController>();
 			bullet.SetVelocity (aimVector * bulletSpeedBase * bulletSpeedMult);
 
-			networkBullet.GetComponent<Rigidbody2D> ().velocity = bullet.vel;
-
+			networkBullet.GetComponent<Rigidbody2D> ().velocity = bullet.GetVelocity();
 
 			NetworkServer.Spawn(networkBullet);
 

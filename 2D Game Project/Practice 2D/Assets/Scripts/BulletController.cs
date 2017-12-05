@@ -47,7 +47,7 @@ public class BulletController : NetworkBehaviour {
     }
 
     // Collisions
-	[ClientCallback]
+	[Server]
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "Player" && activationDelay < 0)

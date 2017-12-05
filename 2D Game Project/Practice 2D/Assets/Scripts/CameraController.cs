@@ -26,12 +26,12 @@ public class CameraController : NetworkBehaviour {
 			return;
 
         float x, y;
-        x = (GameObject.FindGameObjectsWithTag("Player")[0].transform.position.x + GameObject.FindGameObjectsWithTag("Player")[1].transform.position.x) / 2f;
-        y = (GameObject.FindGameObjectsWithTag("Player")[0].transform.position.y + GameObject.FindGameObjectsWithTag("Player")[1].transform.position.y) / 2f;
+        x = (GameObject.FindGameObjectsWithTag("Local")[0].transform.position.x + GameObject.FindGameObjectsWithTag("Local")[1].transform.position.x) / 2f;
+        y = (GameObject.FindGameObjectsWithTag("Local")[0].transform.position.y + GameObject.FindGameObjectsWithTag("Local")[1].transform.position.y) / 2f;
         transform.position = new Vector3(x, y, -1);
 
         float dist;
-        dist = (GameObject.FindGameObjectsWithTag("Player")[0].transform.position - GameObject.FindGameObjectsWithTag("Player")[1].transform.position).magnitude;
+        dist = (GameObject.FindGameObjectsWithTag("Local")[0].transform.position - GameObject.FindGameObjectsWithTag("Local")[1].transform.position).magnitude;
         
         //cam.orthographicSize = MinCameraSize + (dist / 4);
     }
